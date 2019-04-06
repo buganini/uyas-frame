@@ -5,6 +5,7 @@ gap = 1.5;
 stand_gap = 0.1;
 pcb_gap_xy = 1.5;
 screen_gap = 1.0;
+screen_gap_z = 0.05;
 
 thickness = 3;
 screen_width = 177.5;
@@ -15,11 +16,12 @@ screen_cover_thickness = 1.2;
 screen_visible_width = 160;
 screen_visible_height = 105;
 screen_holder_zheight = 2;
-screen_base_zheight = 5;
+
+screen_base_zheight = 3;
 screen_module_zheight = 3.82;
-screen_module_holder_zheight = 1;
+screen_module_inset = 10;
 screen_module_support_thickness = 5;
-screen_elevation = 30 - screen_module_zheight; // number measured from pcb top to screen glass bottom, min 17
+screen_elevation = 30 - screen_module_zheight; // number measured from pcb top to screen glass bottom, min 17 for pcb, min 28 for usb
 screen_support_thickness = 5; // max 9
 screen_top_support_inset = 35;
 screen_glass_thickness = 1.5 + 0.25;
@@ -42,9 +44,9 @@ smt_zheight = 11; // min 5.3
 pcb_support_r = 7 / 2;
 pcb_pin_r = 3.5 / 2;
 
-screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight;
+screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight + screen_gap_z*2;
 screen_holder_stack_zheight = screen_holder_zheight;
-screen_base_stack_zheight = screen_elevation-screen_holder_zheight;
+screen_base_stack_zheight = screen_elevation;
 back_frame_stack_zheight = dc_jack_zheight + pcb_zheight;
 
 stand_length = 30 + back_frame_stack_zheight;
@@ -53,6 +55,7 @@ stand_thickness = 2.5;
 stand_slot_offset = 6; // toward top
 
 screen_cover_level = screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z*3;
+dummy_screen_level = screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z*2.5;
 screen_holder_level = screen_base_stack_zheight+explosion_z*2;
 screen_base_level = explosion_z*1;
 back_frame_level = explosion_z*0;
@@ -62,7 +65,7 @@ module screen_cover()
 translate([0,0,screen_cover_level]){
     rotate([180*flip,0,0]){
         // cover
-        translate([0,0,screen_glass_thickness+screen_module_zheight]){
+        translate([0,0,screen_glass_thickness+screen_module_zheight+screen_gap_z*3]){
             difference(){
                 cube([outer_width, outer_height, screen_cover_thickness]);
                 // visible area
@@ -75,9 +78,9 @@ translate([0,0,screen_cover_level]){
         // border
         translate([0,0,0]){
             difference(){
-                cube([outer_width, outer_height, screen_glass_thickness+screen_module_zheight]);
+                cube([outer_width, outer_height, screen_glass_thickness+screen_module_zheight+screen_gap_z*2]);
                 translate([thickness,thickness,0]){
-                    cube([screen_width+screen_gap*2, screen_height+screen_gap*2, screen_glass_thickness+screen_module_zheight]);
+                    cube([screen_width+screen_gap*2, screen_height+screen_gap*2, screen_glass_thickness+screen_module_zheight+screen_gap_z*2]);
                 };
             };
         };
@@ -103,17 +106,10 @@ translate([0,0,screen_cover_level]){
 module screen_holder()
 translate([0,0,screen_holder_level]){
     difference(){
-        union(){
-            // base
-            translate([(outer_width-screen_buckle_width)/2,0,0]){
-                cube([screen_buckle_width, outer_height, screen_holder_zheight]);
-            };
-            
-            // module support
-            translate([(outer_width-screen_buckle_width)/2,thickness+gap,screen_holder_zheight]){
-                cube([screen_buckle_width, screen_height-gap, screen_module_zheight-gap]);
-            };
+        translate([(outer_width-screen_buckle_width)/2,0,0]){
+            cube([screen_buckle_width, outer_height, screen_holder_zheight]);
         };
+
         // hollow
         hollow_ratio_x = 0.50;
         hollow_ratio_y = 0.75;
@@ -158,18 +154,18 @@ translate([0,0,screen_base_level]){
 
 
     difference(){
-        union(){
+        translate([0,0,screen_base_zheight]){
             top_support_width = pcb_width-screen_top_support_inset*2;
             bottom_support_width = screen_width-gap*2;
             
             // top screen support
             translate([(outer_width-top_support_width)/2,outer_height-thickness-screen_support_thickness-gap,0]){
-                cube([top_support_width, screen_support_thickness, screen_elevation-gap]);
+                cube([top_support_width, screen_support_thickness, screen_elevation+screen_module_zheight-screen_gap_z]);
             };
 
             // bottom screen support
             translate([(outer_width-bottom_support_width)/2,thickness+gap,0]){
-                cube([bottom_support_width , screen_support_thickness, screen_elevation-gap]);
+                cube([bottom_support_width , screen_support_thickness, screen_elevation+screen_module_zheight-screen_gap_z]);
             };
         };
         // screen holder space
@@ -364,9 +360,27 @@ translate([(outer_width-stand_width-stand_gap*2)/2+stand_gap,back_frame_inset+st
     };
 };
 
+module dummy_screen()
+translate([0,0,dummy_screen_level]){
+    translate([0,0,screen_gap_z]){
+        // module
+        translate([thickness+screen_gap+screen_module_inset,thickness+screen_gap+screen_module_inset,0]){
+            cube([screen_width-screen_module_inset*2, screen_height-screen_module_inset*2, screen_module_zheight]);
+        };
+        // glass
+        translate([thickness+screen_gap,thickness+screen_gap,screen_module_zheight]){
+            cube([screen_width, screen_height, screen_glass_thickness]);
+        };
+    };
+};
 
+
+
+//intersection(){
 screen_cover();
+dummy_screen();
 screen_holder();
 screen_base();
 back_frame();
 stand();
+//};
