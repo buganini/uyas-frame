@@ -258,14 +258,15 @@ translate([0,back_frame_inset,explosion_z*0]){
             cube([stand_width+stand_gap*2, stand_thickness+stand_gap*2, back_frame_stack_zheight]);
         };
 
+        stand_room_depth = stand_length-thickness*1.5;
         // stand room - top
-        translate([gap*1.5,back_frame_height-stand_length-stand_gap, -stand_width-stand_gap]){
-            cube([stand_thickness+stand_gap*2, stand_length+stand_gap, back_frame_stack_zheight]);
+        translate([gap*1.5,back_frame_height-stand_room_depth, -stand_width-stand_gap]){
+            cube([stand_thickness+stand_gap*2, stand_room_depth, back_frame_stack_zheight]);
         };
 
         // stand room - right
-        translate([outer_width-stand_length-stand_gap,stand_slot_offset, -stand_width-stand_gap]){
-            cube([stand_length+stand_gap, stand_thickness+stand_gap*2, back_frame_stack_zheight]);
+        translate([outer_width-stand_room_depth,stand_slot_offset, -stand_width-stand_gap]){
+            cube([stand_room_depth, stand_thickness+stand_gap*2, back_frame_stack_zheight]);
         };
         
     };
@@ -327,11 +328,6 @@ translate([(outer_width-stand_width-stand_gap*2)/2+stand_gap,back_frame_inset+st
         // stand
         translate([0,0,0]){
             cube([stand_width, stand_thickness, stand_length]);
-        };
-
-        // stopper
-        translate([-thickness,0,thickness*2]){
-            cube([stand_width+thickness*2, stand_thickness, thickness]);
         };
 
         // handle
