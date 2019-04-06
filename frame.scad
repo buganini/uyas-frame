@@ -283,6 +283,14 @@ translate([0,back_frame_inset,explosion_z*0]){
         for(pos = [
             [0, top_offset],
             [0, bottom_offset],
+        ]){
+            translate(pos){
+                cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5);
+            };
+        };
+        for(pos = [
+            [0, top_offset],
+            [0, bottom_offset],
             [left_offet, top_offset],
             [left_offet, bottom_offset],
             [right_offet, top_offset],
