@@ -246,7 +246,7 @@ translate([0,back_frame_inset,explosion_z*0]){
                 translate([thickness*6, thickness*i*2, 0]){
                     cube([louver_width, thickness, dc_jack_zheight-smt_zheight]);
                 };
-                translate([outer_width-back_frame_inset-thickness*6-louver_width, thickness*i*2, 0]){
+                translate([outer_width-thickness*6-louver_width, thickness*i*2, 0]){
                     cube([louver_width, thickness, dc_jack_zheight-smt_zheight]);
                 };
             };
