@@ -6,6 +6,7 @@ stand_gap = 0.1;
 pcb_gap_xy = 1.5;
 screen_gap = 1.0;
 screen_gap_z = 0.05;
+keypad_gap = 0.1;
 
 thickness = 3;
 screen_width = 177.5;
@@ -44,6 +45,12 @@ smt_zheight = 11; // min 5.3
 pcb_support_r = 7 / 2;
 pcb_pin_r = 3.5 / 2;
 
+keypad_width = 96.4;
+keypad_height = 26;
+keypad_thickness = 1;
+keypad_stop_thickness = 3;
+keypad_offset = outer_height-keypad_width-keypad_stop_thickness-keypad_gap;
+
 screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight + screen_gap_z*2;
 screen_holder_stack_zheight = screen_holder_zheight;
 screen_base_stack_zheight = screen_elevation;
@@ -60,6 +67,7 @@ screen_holder_level = screen_base_stack_zheight+explosion_z*2;
 screen_base_level = explosion_z*1;
 back_frame_level = explosion_z*0;
 stand_level = pcb_zheight-stand_length-explosion_z;
+dummy_keypad_level = screen_base_level+screen_base_zheight + explosion_z*0.5;
 
 module screen_cover()
 translate([0,0,screen_cover_level]){
@@ -228,6 +236,28 @@ translate([0,0,screen_base_level]){
     translate([outer_width+buckle_height, (outer_height-thickness*6)/2, 0]){
         cube([thickness,thickness*6,screen_base_zheight]);
     }
+
+    // keypad support
+    // back
+    translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
+        cube([keypad_stop_thickness, keypad_width+keypad_stop_thickness*2+keypad_gap*2, keypad_height/2]);
+    };
+    // top
+    translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
+        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2, keypad_stop_thickness, keypad_height/2]);
+    };
+    // bottom
+    translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
+        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2, keypad_stop_thickness, keypad_height/2]);
+    };
+    // front - top
+    translate([outer_width-keypad_stop_thickness, keypad_offset+keypad_width-keypad_stop_thickness,screen_base_zheight]){
+        cube([keypad_stop_thickness, keypad_stop_thickness*2+keypad_gap, keypad_height/2]);
+    };
+    // front - bottom
+    translate([outer_width-keypad_stop_thickness, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
+        cube([keypad_stop_thickness, keypad_stop_thickness*2, keypad_height/2]);
+    };
 };
 
 module back_frame()
@@ -298,7 +328,7 @@ translate([0,back_frame_inset,back_frame_level]){
             [0, bottom_offset],
         ]){
             translate(pos){
-                cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5);
+                cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5,$fn=64);
             };
         };
         for(pos = [
@@ -322,8 +352,8 @@ translate([0,back_frame_inset,back_frame_level]){
             [right_offet, bottom_offset],
         ]){
             translate(pos){
-                cylinder(h=support_height, r1=pcb_support_r, r2=pcb_support_r);
-                cylinder(h=pin_height, r1=pcb_pin_r, r2=pcb_pin_r);
+                cylinder(h=support_height, r1=pcb_support_r, r2=pcb_support_r,$fn=64);
+                cylinder(h=pin_height, r1=pcb_pin_r, r2=pcb_pin_r,$fn=64);
             };
         };
     };
@@ -374,6 +404,30 @@ translate([0,0,dummy_screen_level]){
     };
 };
 
+module dummy_keypad()
+translate([outer_width,keypad_offset, dummy_keypad_level]){
+    translate([-keypad_stop_thickness-keypad_gap-keypad_thickness,0]){
+        cube([keypad_thickness, keypad_width, keypad_height]);
+    };
+
+    translate([-keypad_stop_thickness-keypad_gap,0,10]){
+        button_num = 5;
+        button_size = 5;
+        button_height = 3.3;
+        button_offset = 15;
+        button_r = 1.7;
+        for(i=[1:button_num]){
+            translate([0, button_offset*i, 0]){
+                cube([button_height, button_size, button_size]);
+                translate([button_height,button_size/2,button_size/2]){
+                    rotate([0,090,0]){
+                        cylinder(h=1.5, r1=button_r, r2=button_r,$fn=32);
+                    };
+                };
+            };
+        };
+    }
+};
 
 
 //intersection(){
@@ -383,4 +437,5 @@ screen_holder();
 screen_base();
 back_frame();
 stand();
+dummy_keypad();
 //};
