@@ -51,6 +51,7 @@ keypad_thickness = 1;
 keypad_stop_thickness = 3;
 keypad_offset = outer_height-keypad_width-keypad_stop_thickness-keypad_gap;
 keypad_support_zheight = 17;
+keypad_bump = 1.3;
 
 screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight + screen_gap_z*2;
 screen_holder_stack_zheight = screen_holder_zheight;
@@ -258,6 +259,10 @@ translate([0,0,screen_base_level]){
     // front - bottom
     translate([outer_width-keypad_stop_thickness, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
         cube([keypad_stop_thickness, keypad_stop_thickness*2, keypad_support_zheight]);
+    };
+    // bump
+    translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width/2-keypad_stop_thickness/2,screen_base_zheight]){
+        cube([keypad_stop_thickness+keypad_gap+keypad_bump, keypad_stop_thickness, keypad_support_zheight*0.75]);
     };
     // support
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2-keypad_support_zheight, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
