@@ -54,7 +54,7 @@ keypad_support_zheight = 17;
 
 screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight + screen_gap_z*2;
 screen_holder_stack_zheight = screen_holder_zheight;
-screen_base_stack_zheight = screen_elevation;
+screen_base_stack_zheight = screen_elevation - screen_holder_zheight;
 back_frame_stack_zheight = dc_jack_zheight + pcb_zheight;
 
 stand_length = 30 + back_frame_stack_zheight;
