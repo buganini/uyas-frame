@@ -241,13 +241,14 @@ translate([0,back_frame_inset,explosion_z*0]){
         
         // louver
         louver_num = floor(pcb_height / (thickness*2));
-        louver_width = screen_width/2-thickness*8;
+        louver_width = pcb_width/2-thickness*5;
+        louver_margin = thickness*5;
         translate([0, (screen_height-thickness*louver_num*2)/2+thickness, -dc_jack_zheight]){
             for(i=[0:louver_num-1]){
-                translate([thickness*6, thickness*i*2, 0]){
+                translate([louver_margin, thickness*i*2, 0]){
                     cube([louver_width, thickness, dc_jack_zheight-smt_zheight]);
                 };
-                translate([outer_width-thickness*6-louver_width, thickness*i*2, 0]){
+                translate([outer_width-louver_margin-louver_width, thickness*i*2, 0]){
                     cube([louver_width, thickness, dc_jack_zheight-smt_zheight]);
                 };
             };
@@ -288,6 +289,18 @@ translate([0,back_frame_inset,explosion_z*0]){
         ]){
             translate(pos){
                 cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5);
+            };
+        };
+        for(pos = [
+            [left_offet, top_offset],
+            [left_offet, bottom_offset],
+            [right_offet, top_offset],
+            [right_offet, bottom_offset],
+        ]){
+            translate(pos){
+                translate([-pcb_support_r*2,-pcb_support_r]){
+                    cube([pcb_support_r*4,pcb_support_r*2,dc_jack_zheight-smt_zheight]);
+                };
             };
         };
         for(pos = [
