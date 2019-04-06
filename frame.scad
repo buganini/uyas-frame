@@ -36,7 +36,7 @@ dc_jack_width = 9 + 0.5;
 dc_jack_height = 11 + 0.5;
 dc_jack_zheight = 14;
 dc_jack_offset = 2.2; // toward top 2.2
-smt_zheight = 9; // min 5.3
+smt_zheight = 11; // min 5.3
 pcb_support_r = 7 / 2;
 pcb_pin_r = 3.5 / 2;
 
