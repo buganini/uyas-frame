@@ -5,7 +5,7 @@ gap = 1.5;
 stand_gap = 0.1;
 pcb_gap_xy = 1.5;
 
-thickness = 4;
+thickness = 3;
 screen_width = 177.5 + 1.0;
 screen_height = 120.9 + 1.0;
 outer_width = screen_width + thickness*2;
