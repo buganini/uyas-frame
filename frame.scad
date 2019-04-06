@@ -20,6 +20,7 @@ screen_module_holder_zheight = 1;
 screen_module_support_thickness = 5;
 screen_elevation = 30 - screen_module_zheight; // number measured from pcb top to screen glass bottom, min 17
 screen_support_thickness = 5; // max 9
+screen_top_support_inset = 35;
 screen_glass_thickness = 1.5 + 0.25;
 screen_buckle_width = 35;
 screen_buckle_height = 3;
@@ -151,7 +152,7 @@ translate([0,0,explosion_z*1]){
 
     difference(){
         union(){
-            top_support_width = screen_width-gap*2-thickness*16;
+            top_support_width = pcb_width-screen_top_support_inset*2;
             bottom_support_width = screen_width-gap*2;
             
             // top screen support
