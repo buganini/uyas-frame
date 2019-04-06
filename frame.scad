@@ -240,7 +240,7 @@ translate([0,back_frame_inset,explosion_z*0]){
         
         // louver
         louver_num = floor(pcb_height / (thickness*2));
-        louver_width = screen_width/2-thickness*10;
+        louver_width = screen_width/2-thickness*8;
         translate([0, (screen_height-thickness*louver_num*2)/2+thickness, -dc_jack_zheight]){
             for(i=[0:louver_num-1]){
                 translate([thickness*6, thickness*i*2, 0]){
