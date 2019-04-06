@@ -51,8 +51,14 @@ stand_width = 8;
 stand_thickness = 2.5;
 stand_slot_offset = 6; // toward top
 
+screen_cover_level = screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z*3;
+screen_holder_level = screen_base_stack_zheight+explosion_z*2;
+screen_base_level = explosion_z*1;
+back_frame_level = explosion_z*0;
+stand_level = pcb_zheight-stand_length-explosion_z;
+
 module screen_cover()
-translate([0,0,screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z*3]){
+translate([0,0,screen_cover_level]){
     rotate([180*flip,0,0]){
         // cover
         translate([0,0,screen_glass_thickness+screen_module_zheight]){
@@ -94,7 +100,7 @@ translate([0,0,screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z
 };
 
 module screen_holder()
-translate([0,0,screen_base_stack_zheight+explosion_z*2]){
+translate([0,0,screen_holder_level]){
     difference(){
         union(){
             // base
@@ -133,7 +139,7 @@ translate([0,0,screen_base_stack_zheight+explosion_z*2]){
 };
 
 module screen_base()
-translate([0,0,explosion_z*1]){
+translate([0,0,screen_base_level]){
     hollow_width = pcb_width+pcb_gap_xy*2;
     hollow_height = pcb_height+pcb_gap_xy*2;
 
@@ -221,7 +227,7 @@ translate([0,0,explosion_z*1]){
 };
 
 module back_frame()
-translate([0,back_frame_inset,explosion_z*0]){
+translate([0,back_frame_inset,back_frame_level]){
     back_frame_height = outer_height-back_frame_inset*2;
     difference(){
         // body
@@ -336,7 +342,7 @@ translate([0,back_frame_inset,explosion_z*0]){
 };
 
 module stand()
-translate([(outer_width-stand_width-stand_gap*2)/2+stand_gap,back_frame_inset+stand_slot_offset+stand_gap, pcb_zheight-stand_length-explosion_z]){
+translate([(outer_width-stand_width-stand_gap*2)/2+stand_gap,back_frame_inset+stand_slot_offset+stand_gap, stand_level]){
     rotate([90*flip,0,0]){
         // stand
         translate([0,0,0]){
@@ -351,10 +357,8 @@ translate([(outer_width-stand_width-stand_gap*2)/2+stand_gap,back_frame_inset+st
 };
 
 
-//intersection(){
 screen_cover();
 screen_holder();
 screen_base();
 back_frame();
 stand();
-//};
