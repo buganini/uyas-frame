@@ -2,7 +2,7 @@ explosion_z = 50;
 flip = 0;
 
 gap = 1.5;
-stand_gap = 0.75;
+stand_gap = 0.1;
 pcb_gap_xy = 1.5;
 
 thickness = 4;
