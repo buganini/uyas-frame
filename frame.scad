@@ -87,9 +87,9 @@ translate([0,0,screen_cover_level]){
         // border
         translate([0,0,0]){
             difference(){
-                cube([outer_width, outer_height, screen_glass_thickness+screen_module_zheight+screen_gap_z*2]);
+                cube([outer_width, outer_height, screen_glass_thickness+screen_module_zheight+screen_gap_z*3]);
                 translate([thickness,thickness,0]){
-                    cube([screen_width+screen_gap*2, screen_height+screen_gap*2, screen_glass_thickness+screen_module_zheight+screen_gap_z*2]);
+                    cube([screen_width+screen_gap*2, screen_height+screen_gap*2, screen_glass_thickness+screen_module_zheight+screen_gap_z*3]);
                 };
             };
         };
@@ -425,7 +425,7 @@ translate([outer_width,keypad_offset, dummy_keypad_level]){
             translate([0, button_offset*i, 0]){
                 cube([button_height, button_size, button_size]);
                 translate([button_height,button_size/2,button_size/2]){
-                    rotate([0,090,0]){
+                    rotate([0,90,0]){
                         cylinder(h=1.5, r1=button_r, r2=button_r,$fn=32);
                     };
                 };
