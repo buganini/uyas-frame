@@ -2,7 +2,7 @@ explosion_z = 50;
 flip = 0;
 e = 0.00000001;
 
-gap = 1.5;
+gap = 1.0;
 stand_gap = 0.1;
 pcb_gap_xy = 1.5;
 screen_gap = 1.0;
