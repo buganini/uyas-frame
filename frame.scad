@@ -441,8 +441,19 @@ translate([outer_width,keypad_offset, dummy_keypad_level]){
     }
 };
 
+module interference(){
+    for(i=[0:$children-2]){
+        for(j=[i+1:$children-1]){
+            echo(i,j);
+            intersection(){
+                children(i);
+                children(j);
+            };
+        }
+    }
+};
 
-//intersection(){
+//interference(){
 screen_cover();
 dummy_screen();
 screen_holder();
