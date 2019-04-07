@@ -166,18 +166,21 @@ translate([0,0,screen_base_level]){
 
     difference(){
         translate([0,0,screen_base_zheight]){
+            screen_support_zheight = screen_elevation+screen_gap_z;
             top_support_width = pcb_width-screen_top_support_inset*2;
             bottom_support_width = screen_width-gap*2;
             
             // top screen support
             translate([(outer_width-top_support_width)/2,outer_height-thickness-screen_support_thickness-gap,0]){
-                cube([top_support_width, screen_support_thickness, screen_elevation+screen_gap_z]);
+                cube([top_support_width, screen_support_thickness, screen_support_zheight]);
             };
 
             // bottom screen support
             translate([(outer_width-bottom_support_width)/2,thickness+gap,0]){
-                cube([bottom_support_width , screen_support_thickness, screen_elevation+screen_gap_z]);
+                cube([bottom_support_width , screen_support_thickness, screen_support_zheight]);
             };
+
+            echo("screen_support_zheight", screen_support_zheight);
         };
         // screen holder space
         translate([(outer_width-screen_buckle_width)/2-gap,0,screen_base_stack_zheight]){
