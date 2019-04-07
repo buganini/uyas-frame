@@ -189,13 +189,13 @@ translate([0,0,screen_base_level]){
     };
 
     // top pcb stopper
-    translate([(outer_width-pcb_support_r*2)/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length,0]){
-        cube([pcb_support_r*2,top_pcb_stopper_length,screen_base_zheight]);
+    translate([(outer_width-pcb_support_r*2)/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length-pcb_gap_xy,0]){
+        cube([pcb_support_r*2,top_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
     };
 
     // bottom pcb stopper
     translate([(outer_width-pcb_support_r*2)/2,(outer_height-hollow_height)/2,0]){
-        cube([pcb_support_r*2,bottom_pcb_stopper_length,screen_base_zheight]);
+        cube([pcb_support_r*2,bottom_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
     };
 
 
