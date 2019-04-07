@@ -76,29 +76,10 @@ dummy_keypad_level = screen_base_level+screen_base_zheight + explosion_z*0.5;
 module rcube(x,y,z,r){
     fn = 128;
     hull(){
-        // top right
-        translate([x-r,y-r,0]) rotate([0,0,0]) intersection(){
-            cylinder(h=z,r1=r,r2=r,$fn=fn);
-            cube([r,r,z]);
-        };
-
-        // top left
-        translate([r,y-r,0]) rotate([0,0,90]) intersection(){
-            cylinder(h=z,r1=r,r2=r,$fn=fn);
-            cube([r,r,z]);
-        };
-
-        // bottom left
-        translate([r,r,0]) rotate([0,0,180]) intersection(){
-            cylinder(h=z,r1=r,r2=r,$fn=fn);
-            cube([r,r,z]);
-        };
-
-        // bottom right
-        translate([x-r,r,0]) rotate([0,0,270]) intersection(){
-            cylinder(h=z,r1=r,r2=r,$fn=fn);
-            cube([r,r,z]);
-        };
+        translate([r,r,0]) cylinder(h=z,r1=r,r2=r,$fn=fn);
+        translate([x-r,r,0]) cylinder(h=z,r1=r,r2=r,$fn=fn);
+        translate([r,y-r,0]) cylinder(h=z,r1=r,r2=r,$fn=fn);
+        translate([x-r,y-r,0]) cylinder(h=z,r1=r,r2=r,$fn=fn);
     };
 };
 
