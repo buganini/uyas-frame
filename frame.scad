@@ -19,7 +19,7 @@ screen_visible_height = 105;
 screen_holder_zheight = 2;
 
 screen_base_zheight = 3;
-screen_module_zheight = 3.82;
+screen_module_zheight = 3.8;
 screen_module_inset = 10;
 screen_module_support_thickness = 5;
 screen_elevation = 30 - screen_module_zheight; // number measured from pcb top to screen glass bottom, min 17 for pcb, min 28 for usb
@@ -170,12 +170,12 @@ translate([0,0,screen_base_level]){
             
             // top screen support
             translate([(outer_width-top_support_width)/2,outer_height-thickness-screen_support_thickness-gap,0]){
-                cube([top_support_width, screen_support_thickness, screen_elevation+screen_module_zheight-screen_gap_z]);
+                cube([top_support_width, screen_support_thickness, screen_elevation+screen_gap_z]);
             };
 
             // bottom screen support
             translate([(outer_width-bottom_support_width)/2,thickness+gap,0]){
-                cube([bottom_support_width , screen_support_thickness, screen_elevation+screen_module_zheight-screen_gap_z]);
+                cube([bottom_support_width , screen_support_thickness, screen_elevation+screen_gap_z]);
             };
         };
         // screen holder space
@@ -268,6 +268,8 @@ translate([0,0,screen_base_level]){
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2-keypad_support_zheight, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
         cube([keypad_support_zheight, keypad_stop_thickness, keypad_support_zheight]);
     };
+
+    echo("screen_base_stack_zheight", screen_base_stack_zheight);
 };
 
 module back_frame()
