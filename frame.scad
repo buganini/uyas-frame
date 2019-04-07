@@ -1,6 +1,7 @@
 explosion_z = 50;
 flip = 0;
 e = 0.00000001;
+fn = 128;
 
 gap = 1.0;
 stand_gap = 0.1;
@@ -74,7 +75,6 @@ stand_level = pcb_zheight - stand_length - explosion_z;
 dummy_keypad_level = screen_base_level+screen_base_zheight + explosion_z*0.5;
 
 module rcube(x,y,z,r){
-    fn = 128;
     hull(){
         translate([r,r,0]) cylinder(h=z,r1=r,r2=r,$fn=fn);
         translate([x-r,r,0]) cylinder(h=z,r1=r,r2=r,$fn=fn);
@@ -261,7 +261,7 @@ translate([0,0,screen_base_level]){
     };
     // top
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
-        rcube(keypad_stop_thickness*2+keypad_thickness+keypad_gap*2, keypad_stop_thickness, keypad_support_zheight,r);
+        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2-r, keypad_stop_thickness, keypad_support_zheight]);
     };
     // bottom
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
@@ -269,7 +269,7 @@ translate([0,0,screen_base_level]){
     };
     // front - top
     translate([outer_width-keypad_stop_thickness, keypad_offset+keypad_width-keypad_stop_thickness,screen_base_zheight]){
-        rcube(keypad_stop_thickness, keypad_stop_thickness*2+keypad_gap, keypad_support_zheight,r);
+        cube([keypad_stop_thickness, keypad_stop_thickness*2+keypad_gap-r, keypad_support_zheight]);
     };
     // front - bottom
     translate([outer_width-keypad_stop_thickness, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
@@ -278,6 +278,10 @@ translate([0,0,screen_base_level]){
     // bump
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width/2-keypad_stop_thickness/2,screen_base_zheight]){
         cube([keypad_stop_thickness+keypad_gap+keypad_bump, keypad_stop_thickness, keypad_support_zheight*0.75]);
+    };
+    // rounded corner
+    translate([outer_width-r, outer_height-r,screen_base_zheight]){
+        cylinder(h=keypad_support_zheight,r1=r,r2=r,$fn=fn);
     };
     // support
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2-keypad_support_zheight, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
@@ -355,7 +359,7 @@ translate([0,back_frame_inset,back_frame_level]){
             [0, bottom_offset],
         ]){
             translate(pos){
-                cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5,$fn=64);
+                cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5,$fn=fn);
             };
         };
         for(pos = [
@@ -379,8 +383,8 @@ translate([0,back_frame_inset,back_frame_level]){
             [right_offet, bottom_offset],
         ]){
             translate(pos){
-                cylinder(h=support_height, r1=pcb_support_r, r2=pcb_support_r,$fn=64);
-                cylinder(h=pin_height, r1=pcb_pin_r, r2=pcb_pin_r,$fn=64);
+                cylinder(h=support_height, r1=pcb_support_r, r2=pcb_support_r,$fn=fn);
+                cylinder(h=pin_height, r1=pcb_pin_r, r2=pcb_pin_r,$fn=fn);
             };
         };
     };
@@ -448,7 +452,7 @@ translate([outer_width,keypad_offset, dummy_keypad_level]){
                 cube([button_height, button_size, button_size]);
                 translate([button_height,button_size/2,button_size/2]){
                     rotate([0,90,0]){
-                        cylinder(h=1.5, r1=button_r, r2=button_r,$fn=32);
+                        cylinder(h=1.5, r1=button_r, r2=button_r,$fn=fn);
                     };
                 };
             };
