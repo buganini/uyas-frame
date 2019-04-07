@@ -1,5 +1,6 @@
 explosion_z = 50;
 flip = 0;
+e = 0.00000001;
 
 gap = 1.5;
 stand_gap = 0.1;
@@ -63,19 +64,19 @@ stand_width = 8;
 stand_thickness = 2.5;
 stand_slot_offset = 6; // toward top
 
-screen_cover_level = screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z*3;
-dummy_screen_level = screen_base_stack_zheight+screen_holder_stack_zheight+explosion_z*2.5;
-screen_holder_level = screen_base_stack_zheight+explosion_z*2;
-screen_base_level = explosion_z*1;
 back_frame_level = explosion_z*0;
-stand_level = pcb_zheight-stand_length-explosion_z;
+screen_base_level = pcb_zheight + explosion_z*1;
+screen_holder_level = screen_base_level + screen_base_stack_zheight + explosion_z;
+dummy_screen_level = screen_holder_level + screen_holder_stack_zheight + explosion_z;
+screen_cover_level = screen_holder_level + screen_holder_stack_zheight + e + explosion_z;
+stand_level = pcb_zheight - stand_length - explosion_z;
 dummy_keypad_level = screen_base_level+screen_base_zheight + explosion_z*0.5;
 
 module screen_cover()
 translate([0,0,screen_cover_level]){
     rotate([180*flip,0,0]){
         // cover
-        translate([0,0,screen_glass_thickness+screen_module_zheight+screen_gap_z*3]){
+        translate([0,0,screen_glass_thickness+screen_module_zheight+screen_gap_z*2]){
             difference(){
                 cube([outer_width, outer_height, screen_cover_thickness]);
                 // visible area
@@ -88,9 +89,9 @@ translate([0,0,screen_cover_level]){
         // border
         translate([0,0,0]){
             difference(){
-                cube([outer_width, outer_height, screen_glass_thickness+screen_module_zheight+screen_gap_z*3]);
+                cube([outer_width, outer_height, screen_glass_thickness+screen_module_zheight+screen_gap_z*2]);
                 translate([thickness,thickness,0]){
-                    cube([screen_width+screen_gap*2, screen_height+screen_gap*2, screen_glass_thickness+screen_module_zheight+screen_gap_z*3]);
+                    cube([screen_width+screen_gap*2, screen_height+screen_gap*2, screen_glass_thickness+screen_module_zheight+screen_gap_z*2]);
                 };
             };
         };
@@ -117,31 +118,31 @@ module screen_holder()
 translate([0,0,screen_holder_level]){
     difference(){
         translate([(outer_width-screen_buckle_width)/2,0,0]){
-            cube([screen_buckle_width, outer_height, screen_holder_zheight]);
+            cube([screen_buckle_width, outer_height, screen_holder_stack_zheight]);
         };
 
         // hollow
         hollow_ratio_x = 0.50;
         hollow_ratio_y = 0.75;
         translate([(outer_width-screen_buckle_width)/2+(screen_buckle_width-screen_buckle_width*hollow_ratio_x)/2,(outer_height-screen_height*hollow_ratio_y)/2,0]){
-            cube([screen_buckle_width*hollow_ratio_x, screen_height*hollow_ratio_y, screen_holder_zheight+screen_module_zheight-gap]);
+            cube([screen_buckle_width*hollow_ratio_x, screen_height*hollow_ratio_y, screen_holder_zheight]);
         };
     };
     
     // top buckle
     translate([(outer_width-screen_buckle_width)/2,outer_height,0]){
-        cube([screen_buckle_width,screen_buckle_height,screen_holder_zheight]);
+        cube([screen_buckle_width,screen_buckle_height,screen_holder_stack_zheight]);
     };
     translate([(outer_width-(screen_buckle_width+thickness*2))/2,outer_height+screen_buckle_height,0]){
-        cube([screen_buckle_width+thickness*2,thickness,screen_holder_zheight]);
+        cube([screen_buckle_width+thickness*2,thickness,screen_holder_stack_zheight]);
     };
     
     // bottom buckle
     translate([(outer_width-screen_buckle_width)/2,-screen_buckle_height,0]){
-        cube([screen_buckle_width,screen_buckle_height,screen_holder_zheight]);
+        cube([screen_buckle_width,screen_buckle_height,screen_holder_stack_zheight]);
     };
     translate([(outer_width-(screen_buckle_width+thickness*2))/2,-screen_buckle_height-thickness,0]){
-        cube([screen_buckle_width+thickness*2,thickness,screen_holder_zheight]);
+        cube([screen_buckle_width+thickness*2,thickness,screen_holder_stack_zheight]);
     };
 };
 
