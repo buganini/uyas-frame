@@ -6,7 +6,7 @@ stand_gap = 0.1;
 pcb_gap_xy = 1.5;
 screen_gap = 1.0;
 screen_gap_z = 0.05;
-keypad_gap = 0.1;
+keypad_gap = 0.5;
 
 thickness = 3;
 screen_width = 177.5;
@@ -51,7 +51,7 @@ keypad_thickness = 1;
 keypad_stop_thickness = 3;
 keypad_offset = outer_height-keypad_width-keypad_stop_thickness-keypad_gap;
 keypad_support_zheight = 17;
-keypad_bump = 1.3;
+keypad_bump = 1.2;
 
 screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight + screen_gap_z*2;
 screen_holder_stack_zheight = screen_holder_zheight;
