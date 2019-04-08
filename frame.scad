@@ -69,8 +69,8 @@ screen_base_stack_zheight = screen_elevation - screen_holder_zheight;
 back_frame_stack_zheight = dc_jack_zheight + pcb_zheight;
 
 stand_length = 30 + back_frame_stack_zheight;
-stand_width = 8;
-stand_thickness = 2.5;
+stand_width = 12;
+stand_thickness = 3;
 stand_slot_offset = 6; // toward top
 
 back_frame_level = explosion_z*0;
@@ -392,7 +392,8 @@ translate([0,back_frame_inset,back_frame_level]){
 
         stand_room_depth = stand_length-thickness*1.5;
         // stand room - top
-        translate([gap*3.5,back_frame_height-stand_room_depth, pcb_zheight-stand_width-stand_room_gap]){
+        left_wall_thickness = (outer_width-pcb_width-+pcb_gap_xy*2)/2;
+        translate([(left_wall_thickness-(stand_thickness+stand_room_gap*2))/2,back_frame_height-stand_room_depth, pcb_zheight-stand_width-stand_room_gap]){
             cube([stand_thickness+stand_room_gap*2, stand_room_depth, stand_width+stand_room_gap]);
         };
 
@@ -481,11 +482,6 @@ translate([(outer_width-stand_width-stand_slot_gap*2)/2+stand_slot_gap,back_fram
         // stand
         translate([0,0,0]){
             cube([stand_width, stand_thickness, stand_length]);
-        };
-
-        // handle
-        translate([-thickness,0,0]){
-            cube([stand_width+thickness*2, stand_thickness, thickness]);
         };
     };
 };
