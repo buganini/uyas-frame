@@ -351,6 +351,7 @@ translate([0,back_frame_inset,back_frame_level]){
     translate([(outer_width-dc_jack_width)/2+dc_jack_width/2,(back_frame_height-dc_jack_height)/2+dc_jack_height/2+dc_jack_offset,-dc_jack_zheight]){ // anchor to center of dc jack
         support_height = dc_jack_zheight;
         pin_height = dc_jack_zheight+pcb_zheight;
+        pcb_support_skirt_zheight = support_height*0.7;
         
         h_offset = 69;
         top_offset = dc_jack_height/2 + 31.5;
@@ -363,7 +364,7 @@ translate([0,back_frame_inset,back_frame_level]){
             [0, bottom_offset],
         ]){
             translate(pos){
-                cylinder(h=support_height*0.7, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5,$fn=fn);
+                cylinder(h=pcb_support_skirt_zheight, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5,$fn=fn);
             };
         };
         for(pos = [
@@ -374,7 +375,7 @@ translate([0,back_frame_inset,back_frame_level]){
         ]){
             translate(pos){
                 translate([-pcb_support_r*2,-pcb_support_r]){
-                    cube([pcb_support_r*4,pcb_support_r*2,dc_jack_zheight-smt_zheight]);
+                    cube([pcb_support_r*4,pcb_support_r*2,pcb_support_skirt_zheight]);
                 };
             };
         };
