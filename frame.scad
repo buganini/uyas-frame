@@ -33,9 +33,6 @@ screen_buckle_width = 35;
 screen_buckle_height = 3;
 buckle_height=4;
 
-top_pcb_stopper_length = 6;
-bottom_pcb_stopper_length = 12;
-
 pcb_width = 163.4792;
 pcb_height = 97.05;
 pcb_zheight = 1.7 + 0.25;
@@ -47,6 +44,10 @@ dc_jack_offset = 2.2; // toward top 2.2
 smt_zheight = 11; // min 5.3
 pcb_support_r = 7 / 2;
 pcb_pin_r = 3.5 / 2;
+
+top_pcb_stopper_length = 6;
+bottom_pcb_stopper_length = 12;
+pcb_stopper_width = pcb_support_r*1.5;
 
 keypad_width = 96.4;
 keypad_height = 26;
@@ -200,13 +201,13 @@ translate([0,0,screen_base_level]){
     };
 
     // top pcb stopper
-    translate([(outer_width-pcb_support_r*2)/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length-pcb_gap_xy,0]){
-        cube([pcb_support_r*2,top_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
+    translate([(outer_width-pcb_stopper_width)/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length-pcb_gap_xy,0]){
+        cube([pcb_stopper_width,top_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
     };
 
     // bottom pcb stopper
-    translate([(outer_width-pcb_support_r*2)/2,(outer_height-hollow_height)/2,0]){
-        cube([pcb_support_r*2,bottom_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
+    translate([(outer_width-pcb_stopper_width)/2,(outer_height-hollow_height)/2,0]){
+        cube([pcb_stopper_width,bottom_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
     };
 
 
