@@ -103,7 +103,7 @@ translate([0,0,screen_cover_level]){
                 };
             };
         };
-        
+
         // border
         translate([0,0,0]){
             difference(){
@@ -128,7 +128,7 @@ translate([0,0,screen_cover_level]){
                 cube([anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_cover_stack_zheight]);
             };
         };
-        
+
         // bottom buckle
         difference(){
             union(){
@@ -160,7 +160,7 @@ translate([0,0,screen_holder_level]){
             cube([screen_buckle_width*hollow_ratio_x, screen_height*hollow_ratio_y, screen_holder_zheight]);
         };
     };
-    
+
     // top buckle
     difference(){
         union(){
@@ -175,7 +175,7 @@ translate([0,0,screen_holder_level]){
             cube([anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_holder_stack_zheight]);
         };
     };
-    
+
     // bottom buckle
     difference(){
         union(){
@@ -200,7 +200,7 @@ translate([0,0,screen_base_level]){
     // border
     difference(){
         rcube(outer_width, outer_height, screen_base_zheight,r);
-        
+
         translate([(outer_width-hollow_width)/2,(outer_height-hollow_height)/2,0]){
             cube([
                 hollow_width,
@@ -228,6 +228,7 @@ translate([0,0,screen_base_level]){
 
             echo("screen_support_zheight", screen_support_zheight);
         };
+
         // screen holder space
         translate([(outer_width-screen_buckle_width)/2-gap,0,screen_base_stack_zheight]){
             cube([screen_buckle_width+gap*2, outer_height, screen_elevation-gap]);
@@ -359,17 +360,17 @@ translate([0,back_frame_inset,back_frame_level]){
         translate([0,0,-dc_jack_zheight]){
             rcube(outer_width, outer_height-back_frame_inset*2, back_frame_stack_zheight,r);
         };
-    
+
         // smt space
         translate([(outer_width-pcb_width-pcb_gap_xy*2)/2,(back_frame_height-pcb_height-pcb_gap_xy*2)/2,-smt_zheight]){
             cube([pcb_width+pcb_gap_xy*2, pcb_height+pcb_gap_xy*2, smt_zheight+pcb_zheight]);
         }
-        
+
         // dc jack
         translate([(outer_width-dc_jack_width)/2,(back_frame_height-dc_jack_height)/2+dc_jack_offset, -dc_jack_zheight]){
             cube([dc_jack_width, dc_jack_height, dc_jack_zheight-smt_zheight]);
         };
-        
+
         // louver
         louver_num = floor(pcb_height / (thickness*2));
         louver_width = pcb_width/2-thickness*5;
@@ -384,7 +385,7 @@ translate([0,back_frame_inset,back_frame_level]){
                 };
             };
         };
-        
+
         // stand slot
         translate([(outer_width-stand_width-stand_slot_gap*2)/2,stand_slot_offset, -dc_jack_zheight]){
             cube([stand_width+stand_slot_gap*2, stand_thickness+stand_slot_gap*2, back_frame_stack_zheight]);
@@ -401,21 +402,21 @@ translate([0,back_frame_inset,back_frame_level]){
         translate([outer_width-stand_room_depth,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
             cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
         };
-        
+
     };
-    
+
     // pcb support
     translate([(outer_width-dc_jack_width)/2+dc_jack_width/2,(back_frame_height-dc_jack_height)/2+dc_jack_height/2+dc_jack_offset,-dc_jack_zheight]){ // anchor to center of dc jack
         support_height = dc_jack_zheight;
         pin_height = dc_jack_zheight+pcb_zheight;
         pcb_support_skirt_zheight = support_height*0.7;
-        
+
         h_offset = 69;
         top_offset = dc_jack_height/2 + 31.5;
         bottom_offset = -dc_jack_height/2 - 29;
         left_offet = -dc_jack_width/2 - h_offset;
         right_offet = dc_jack_width/2 + h_offset;
-        
+
         for(pos = [
             [0, top_offset],
             [0, bottom_offset],
@@ -450,7 +451,7 @@ translate([0,back_frame_inset,back_frame_level]){
             };
         };
     };
-        
+
     // left buckle
     translate([-buckle_height,(outer_height-back_frame_inset*2-thickness*4)/2,-dc_jack_zheight]){
         cube([buckle_height,thickness*4,back_frame_stack_zheight]);
