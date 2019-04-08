@@ -5,7 +5,7 @@ fn = 128;
 
 gap = 1.0;
 stand_gap = 0.1;
-pcb_gap_xy = 1.5;
+pcb_gap_xy = 2.0;
 screen_gap = 1.0;
 screen_gap_z = 0.05;
 keypad_gap = 0.5;
