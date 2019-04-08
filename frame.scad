@@ -4,7 +4,8 @@ e = 0.00000001;
 fn = 128;
 
 gap = 1.0;
-stand_gap = 0.1;
+stand_room_gap = 0.1;
+stand_slot_gap = 0.25;
 pcb_gap_xy = 2.0;
 screen_gap = 1.0;
 screen_gap_z = 0.05;
@@ -385,19 +386,19 @@ translate([0,back_frame_inset,back_frame_level]){
         };
         
         // stand slot
-        translate([(outer_width-stand_width-stand_gap*2)/2,stand_slot_offset, -dc_jack_zheight]){
-            cube([stand_width+stand_gap*2, stand_thickness+stand_gap*2, back_frame_stack_zheight]);
+        translate([(outer_width-stand_width-stand_slot_gap*2)/2,stand_slot_offset, -dc_jack_zheight]){
+            cube([stand_width+stand_slot_gap*2, stand_thickness+stand_slot_gap*2, back_frame_stack_zheight]);
         };
 
         stand_room_depth = stand_length-thickness*1.5;
         // stand room - top
-        translate([gap*3.5,back_frame_height-stand_room_depth, -stand_width-stand_gap]){
-            cube([stand_thickness+stand_gap*2, stand_room_depth, back_frame_stack_zheight]);
+        translate([gap*3.5,back_frame_height-stand_room_depth, pcb_zheight-stand_width-stand_room_gap]){
+            cube([stand_thickness+stand_room_gap*2, stand_room_depth, stand_width+stand_room_gap]);
         };
 
         // stand room - right
-        translate([outer_width-stand_room_depth,stand_slot_offset, -stand_width-stand_gap]){
-            cube([stand_room_depth, stand_thickness+stand_gap*2, back_frame_stack_zheight]);
+        translate([outer_width-stand_room_depth,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
+            cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
         };
         
     };
@@ -475,7 +476,7 @@ translate([0,back_frame_inset,back_frame_level]){
 };
 
 module stand()
-translate([(outer_width-stand_width-stand_gap*2)/2+stand_gap,back_frame_inset+stand_slot_offset+stand_gap, stand_level]){
+translate([(outer_width-stand_width-stand_slot_gap*2)/2+stand_slot_gap,back_frame_inset+stand_slot_offset+stand_slot_gap, stand_level]){
     rotate([90*flip,0,0]){
         // stand
         translate([0,0,0]){
