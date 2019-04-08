@@ -281,7 +281,10 @@ translate([0,0,screen_base_level]){
     };
     // rounded corner
     translate([outer_width-r, outer_height-r,screen_base_zheight]){
-        cylinder(h=keypad_support_zheight,r1=r,r2=r,$fn=fn);
+        intersection(){
+            cylinder(h=keypad_support_zheight,r1=r,r2=r,$fn=fn);
+            cube([r,r,keypad_support_zheight]);
+        };
     };
     // support
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2-keypad_support_zheight, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
