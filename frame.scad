@@ -16,7 +16,8 @@ micpad_gap_z = 0.5;
 thickness = 3;
 r = thickness;
 
-anchor_width = 4;
+h_anchor_width = 16;
+v_anchor_width = 4;
 anchor_thickness = 3;
 anchor_gap = 0.5;
 
@@ -140,8 +141,8 @@ translate([0,0,screen_cover_level]){
                     rcube(screen_buckle_width+thickness*2,thickness,screen_cover_stack_zheight,thickness/2);
                 };
             };
-            translate([(outer_width-anchor_width-anchor_gap*2)/2,outer_height,0]){
-                cube([anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_cover_stack_zheight]);
+            translate([(outer_width-h_anchor_width-anchor_gap*2)/2,outer_height,0]){
+                cube([h_anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_cover_stack_zheight]);
             };
         };
 
@@ -155,8 +156,8 @@ translate([0,0,screen_cover_level]){
                     rcube(screen_buckle_width+thickness*2,thickness,screen_cover_stack_zheight,thickness/2);
                 };
             };
-            translate([(outer_width-anchor_width-anchor_gap*2)/2,-anchor_thickness-anchor_gap*2,0]){
-                cube([anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_cover_stack_zheight]);
+            translate([(outer_width-h_anchor_width-anchor_gap*2)/2,-anchor_thickness-anchor_gap*2,0]){
+                cube([h_anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_cover_stack_zheight]);
             };
         };
     };
@@ -187,8 +188,8 @@ translate([0,0,screen_holder_level]){
                 rcube(screen_buckle_width+thickness*2,thickness,screen_holder_stack_zheight,thickness/2);
             };
         };
-        translate([(outer_width-anchor_width-anchor_gap*2)/2,outer_height,0]){
-            cube([anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_holder_stack_zheight]);
+        translate([(outer_width-h_anchor_width-anchor_gap*2)/2,outer_height,0]){
+            cube([h_anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_holder_stack_zheight]);
         };
     };
 
@@ -202,8 +203,8 @@ translate([0,0,screen_holder_level]){
                 rcube(screen_buckle_width+thickness*2,thickness,screen_holder_stack_zheight,thickness/2);
             };
         };
-        translate([(outer_width-anchor_width-anchor_gap*2)/2,-anchor_thickness-anchor_gap*2,0]){
-            cube([anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_holder_stack_zheight]);
+        translate([(outer_width-h_anchor_width-anchor_gap*2)/2,-anchor_thickness-anchor_gap*2,0]){
+            cube([h_anchor_width+anchor_gap*2,anchor_thickness+anchor_gap*2,screen_holder_stack_zheight]);
         };
     };
 };
@@ -256,8 +257,8 @@ translate([0,0,screen_base_level]){
                 rcube(screen_buckle_width+thickness*2,thickness,screen_base_stack_zheight,thickness/2);
             };
             // anchor
-            translate([(outer_width-anchor_width)/2,outer_height+anchor_gap,0]){
-                cube([anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight+screen_gap*2]);
+            translate([(outer_width-h_anchor_width)/2,outer_height+anchor_gap,0]){
+                cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight+screen_gap*2]);
             };
 
             // bottom buckle
@@ -274,8 +275,8 @@ translate([0,0,screen_base_level]){
                 rcube(screen_buckle_width+thickness*2,thickness,screen_base_stack_zheight,thickness/2);
             };
             // anchor
-            translate([(outer_width-anchor_width)/2,-anchor_thickness-anchor_gap,0]){
-                cube([anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight+screen_gap*2]);
+            translate([(outer_width-h_anchor_width)/2,-anchor_thickness-anchor_gap,0]){
+                cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight+screen_gap*2]);
             };
         };
 
@@ -317,7 +318,7 @@ translate([0,0,screen_base_level]){
             };
         };
         translate([-anchor_thickness-anchor_gap*2,(outer_height-anchor_thickness-anchor_gap*2)/2,0]){
-            cube([anchor_thickness+anchor_gap*2,anchor_width+anchor_gap*2,screen_base_zheight]);
+            cube([anchor_thickness+anchor_gap*2,v_anchor_width+anchor_gap*2,screen_base_zheight]);
         };
     };
 
@@ -331,8 +332,8 @@ translate([0,0,screen_base_level]){
                 rcube(thickness,thickness*6,screen_base_zheight,thickness/2);
             };
         };
-        translate([outer_width,(outer_height-anchor_width-anchor_gap*2)/2,0]){
-            cube([anchor_thickness+anchor_gap*2,anchor_width+anchor_gap*2,screen_base_zheight]);
+        translate([outer_width,(outer_height-v_anchor_width-anchor_gap*2)/2,0]){
+            cube([anchor_thickness+anchor_gap*2,v_anchor_width+anchor_gap*2,screen_base_zheight]);
         };
     };
 
@@ -484,8 +485,8 @@ translate([0,back_frame_inset,back_frame_level]){
         rcube(thickness,thickness*6,back_frame_stack_zheight,thickness/2);
     }
     // anchor
-    translate([-anchor_thickness-anchor_gap,(outer_height-back_frame_inset*2-anchor_width)/2,-dc_jack_zheight]){
-        cube([anchor_thickness,anchor_width,back_frame_stack_zheight+screen_base_zheight]);
+    translate([-anchor_thickness-anchor_gap,(outer_height-back_frame_inset*2-v_anchor_width)/2,-dc_jack_zheight]){
+        cube([anchor_thickness,v_anchor_width,back_frame_stack_zheight+screen_base_zheight]);
     };
 
     // right buckle
@@ -496,8 +497,8 @@ translate([0,back_frame_inset,back_frame_level]){
         rcube(thickness,thickness*6,back_frame_stack_zheight,thickness/2);
     }
     // anchor
-    translate([outer_width+anchor_gap,(outer_height-back_frame_inset*2-anchor_width)/2,-dc_jack_zheight]){
-        cube([anchor_thickness,anchor_width,back_frame_stack_zheight+screen_base_zheight]);
+    translate([outer_width+anchor_gap,(outer_height-back_frame_inset*2-v_anchor_width)/2,-dc_jack_zheight]){
+        cube([anchor_thickness,v_anchor_width,back_frame_stack_zheight+screen_base_zheight]);
     };
 };
 
