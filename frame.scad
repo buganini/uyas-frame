@@ -351,9 +351,9 @@ translate([0,back_frame_inset,back_frame_level]){
         support_height = dc_jack_zheight;
         pin_height = dc_jack_zheight+pcb_zheight;
         
-        h_offset = 68.4;
-        top_offset = dc_jack_height/2 + 31.68;
-        bottom_offset = -dc_jack_height/2 - 29.5;
+        h_offset = 69;
+        top_offset = dc_jack_height/2 + 31.5;
+        bottom_offset = -dc_jack_height/2 - 29;
         left_offet = -dc_jack_width/2 - h_offset;
         right_offet = dc_jack_width/2 + h_offset;
         
