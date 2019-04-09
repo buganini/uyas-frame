@@ -73,7 +73,7 @@ keypad_thickness = 1;
 keypad_stop_thickness = 3;
 keypad_offset = outer_height-keypad_width-keypad_stop_thickness-keypad_gap;
 keypad_support_zheight = 17;
-keypad_bump = 1.2;
+keypad_support_zheight_inset = 3;
 
 screen_cover_stack_zheight = screen_cover_thickness+screen_glass_thickness+screen_module_zheight + screen_gap_z*2;
 screen_holder_stack_zheight = screen_holder_zheight;
@@ -357,29 +357,26 @@ translate([0,0,screen_base_level]){
     };
     // top
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
-        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2-r, keypad_stop_thickness, keypad_support_zheight]);
+        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2-r, keypad_stop_thickness, keypad_support_zheight-keypad_support_zheight_inset]);
     };
     // bottom
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
-        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2, keypad_stop_thickness, keypad_support_zheight]);
+        cube([keypad_stop_thickness*2+keypad_thickness+keypad_gap*2, keypad_stop_thickness, keypad_support_zheight-keypad_support_zheight_inset]);
     };
     // front - top
     translate([outer_width-keypad_stop_thickness, keypad_offset+keypad_width-keypad_stop_thickness,screen_base_zheight]){
-        cube([keypad_stop_thickness, keypad_stop_thickness*2+keypad_gap-r, keypad_support_zheight]);
+        cube([keypad_stop_thickness, keypad_stop_thickness*2+keypad_gap-r, keypad_support_zheight-keypad_support_zheight_inset]);
     };
     // front - bottom
     translate([outer_width-keypad_stop_thickness, keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight]){
-        cube([keypad_stop_thickness, keypad_stop_thickness*2, keypad_support_zheight]);
+        cube([keypad_stop_thickness, keypad_stop_thickness*2, keypad_support_zheight-keypad_support_zheight_inset]);
     };
-    // bump
-    translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width/2-keypad_stop_thickness/2,screen_base_zheight]){
-        cube([keypad_stop_thickness+keypad_gap+keypad_bump, keypad_stop_thickness, keypad_support_zheight*0.75]);
-    };
+
     // rounded corner
     translate([outer_width-r, outer_height-r,screen_base_zheight]){
         intersection(){
             cylinder(h=keypad_support_zheight,r1=r,r2=r,$fn=fn);
-            cube([r,r,keypad_support_zheight]);
+            cube([r,r,keypad_support_zheight-keypad_support_zheight_inset]);
         };
     };
     // support
