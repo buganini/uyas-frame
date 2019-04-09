@@ -89,14 +89,27 @@ micpad_width = 100;
 micpad_height = 18.2;
 micpad_thickness = 1.0;
 
+ledpad_width = 180;
+ledpad_height = 9.5;
+ledpad_thickness = 0.8;
+ledpad_gap_xy = 0.25;
+ledpad_gap_z = 0.5;
+ledpad_support_thickness = 2;
+ledpad_connector_width = 7.6;
+ledpad_connector_height = 3.4;
+ledpad_connector_zheight = 4.4;
+ledpad_connector_top_margin = 1.5;
+ledpad_connector_gap = 0.25;
+
 back_frame_level = explosion_z*0;
 screen_base_level = pcb_zheight + explosion_z*1;
 screen_holder_level = screen_base_level + screen_base_stack_zheight + explosion_z;
 dummy_screen_level = screen_holder_level + screen_holder_stack_zheight + explosion_z*0.5;
 screen_cover_level = screen_holder_level + screen_holder_stack_zheight + e + explosion_z;
-stand_level = pcb_zheight - stand_length - explosion_z;
+stand_level = pcb_zheight - e - explosion_z;
 dummy_keypad_level = screen_base_level + screen_base_zheight + explosion_z*0.4;
 dummy_micpad_level = screen_base_level + screen_base_stack_zheight + explosion_z*0.6;
+dummy_ledpad_level = pcb_zheight + explosion_z*0.5;
 
 module rcube(x,y,z,r){
     hull(){
@@ -383,7 +396,7 @@ translate([0,back_frame_inset,back_frame_level]){
     difference(){
         // body
         translate([0,0,-dc_jack_zheight]){
-            rcube(outer_width, outer_height-back_frame_inset*2, back_frame_stack_zheight,r);
+            rcube(outer_width, outer_height-back_frame_inset*2, back_frame_stack_zheight, r);
         };
 
         // smt space
@@ -428,6 +441,22 @@ translate([0,back_frame_inset,back_frame_level]){
             cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
         };
 
+
+        // ledpad
+        union(){
+            // pad room
+            translate([(outer_width-ledpad_width-ledpad_gap_xy*2)/2,ledpad_support_thickness,pcb_zheight-ledpad_height-ledpad_gap_xy*2]){
+                cube([ledpad_width+ledpad_gap_xy*2,ledpad_thickness+ledpad_gap_z*2, ledpad_height+ledpad_gap_xy*2]);
+            };
+            // light room
+            translate([(outer_width-ledpad_width+ledpad_support_thickness*4)/2,0,pcb_zheight-ledpad_height-ledpad_gap_xy*2]){
+                cube([ledpad_width-ledpad_support_thickness*4,ledpad_support_thickness, ledpad_height+ledpad_gap_xy*2]);
+            };
+            // connector room
+            translate([(outer_width-ledpad_connector_height-ledpad_connector_gap*2)/2,ledpad_support_thickness+ledpad_thickness+ledpad_gap_z*2,pcb_zheight-ledpad_connector_top_margin-ledpad_connector_width-ledpad_connector_gap*2]){
+                cube([ledpad_connector_height+ledpad_connector_gap*2, (back_frame_height-pcb_height-pcb_gap_xy*2)/2, ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*2]);
+            };
+        };
     };
 
     // pcb support
@@ -506,8 +535,16 @@ module stand()
 translate([(outer_width-stand_width-stand_slot_gap*2)/2+stand_slot_gap,back_frame_inset+stand_slot_offset+stand_slot_gap, stand_level]){
     rotate([90*flip,0,0]){
         // stand
-        translate([0,0,0]){
-            cube([stand_width, stand_thickness, stand_length]);
+        difference(){
+            translate([0,0, -stand_length]){
+                cube([stand_width, stand_thickness, stand_length]);
+            };
+
+            // led pad connector
+            yield_multiplier = 6;
+            translate([(stand_width-ledpad_connector_height-ledpad_connector_gap*yield_multiplier)/2,0,-(ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier)]){
+                cube([ledpad_connector_height+ledpad_connector_gap*yield_multiplier, stand_thickness, ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier]);
+            };
         };
     };
 };
@@ -577,6 +614,17 @@ translate([(outer_width-micpad_width)/2,outer_height-thickness-gap, dummy_micpad
     };
 };
 
+module dummy_ledpad()
+translate([0,back_frame_inset+ledpad_support_thickness+ledpad_gap_z,dummy_ledpad_level]){
+    translate([(outer_width-ledpad_width)/2,0,-ledpad_height-ledpad_gap_xy]){
+        cube([ledpad_width, ledpad_thickness, ledpad_height]);
+        difference(){
+            translate([(ledpad_width-ledpad_connector_height)/2,ledpad_thickness,ledpad_height-ledpad_connector_width-ledpad_connector_top_margin]) cube([ledpad_connector_height,ledpad_connector_zheight,ledpad_connector_width]);
+            translate([(ledpad_width-ledpad_connector_height)/2+0.5,ledpad_thickness,ledpad_height-ledpad_connector_width-ledpad_connector_top_margin+0.5]) cube([ledpad_connector_height-1,ledpad_connector_zheight,ledpad_connector_width-1]);
+        };
+    };
+};
+
 module interference(){
     if($children>=2){
         for(i=[0:$children-2]){
@@ -600,4 +648,5 @@ back_frame();
 stand();
 dummy_keypad();
 dummy_micpad();
+dummy_ledpad();
 //};
