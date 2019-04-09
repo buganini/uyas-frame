@@ -340,7 +340,7 @@ translate([0,0,screen_base_level]){
     // keypad support
     // back
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, thickness+gap,screen_base_zheight]){
-        cube([keypad_stop_thickness, keypad_offset+keypad_width+keypad_stop_thickness+keypad_gap*2-thickness-gap, keypad_support_zheight]);
+        cube([keypad_stop_thickness, keypad_offset+keypad_width+keypad_stop_thickness+keypad_gap-thickness-gap, keypad_support_zheight]);
     };
     // top
     translate([outer_width-keypad_thickness-keypad_stop_thickness*2-keypad_gap*2, keypad_offset+keypad_width+keypad_gap,screen_base_zheight]){
