@@ -271,7 +271,7 @@ translate([0,0,screen_base_level]){
             };
             // anchor
             translate([(outer_width-h_anchor_width)/2,outer_height+anchor_gap,0]){
-                cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight+screen_gap*2]);
+                cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight]);
             };
 
             // bottom buckle
@@ -289,7 +289,7 @@ translate([0,0,screen_base_level]){
             };
             // anchor
             translate([(outer_width-h_anchor_width)/2,-anchor_thickness-anchor_gap,0]){
-                cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight+screen_gap*2]);
+                cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight]);
             };
         };
 
