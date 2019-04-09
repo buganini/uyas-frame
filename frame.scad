@@ -539,8 +539,27 @@ translate([(outer_width-stand_width-stand_slot_gap*2)/2+stand_slot_gap,back_fram
 
             // led pad connector
             yield_multiplier = 6;
-            translate([(stand_width-ledpad_connector_height-ledpad_connector_gap*yield_multiplier)/2,0,-(ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier)]){
-                cube([ledpad_connector_height+ledpad_connector_gap*yield_multiplier, stand_thickness, ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier]);
+            connector_space = ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier;
+            translate([(stand_width-ledpad_connector_height-ledpad_connector_gap*yield_multiplier)/2,0,-connector_space]){
+                cube([ledpad_connector_height+ledpad_connector_gap*yield_multiplier, stand_thickness, connector_space]);
+            };
+
+            img_width = 74;
+            img_height = 32;
+            scale_factor = 0.25;
+            depth = 1;
+            bottom_margin = 5;
+            translate([(stand_width-img_height*scale_factor)/2+img_height*scale_factor,stand_thickness-depth,-stand_length+img_width*scale_factor+bottom_margin]){
+                rotate([90,90,180]){
+                    translate([0,0,-100+depth*2]){
+                        scale([scale_factor,scale_factor,1]){
+                            intersection(){
+                                surface(file = "uyas.png");
+                                translate([0,0,100-depth*2]) cube([img_width,img_height,depth*2]);
+                            };
+                        };
+                    };
+                };
             };
         };
     };
