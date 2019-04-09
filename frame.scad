@@ -10,7 +10,7 @@ pcb_gap_xy = 2.0;
 screen_gap = 1.0;
 screen_gap_z = 0.05;
 keypad_gap = 0.5;
-micpad_gap_xy = 0.5;
+micpad_gap_xy = 0.25;
 micpad_gap_z = 0.5;
 
 thickness = 3;
