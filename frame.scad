@@ -81,7 +81,7 @@ screen_base_stack_zheight = screen_elevation - screen_holder_zheight;
 back_frame_stack_zheight = dc_jack_zheight + pcb_zheight;
 
 stand_length = 30 + back_frame_stack_zheight;
-stand_width = 12;
+stand_width = 13;
 stand_thickness = 3;
 stand_slot_offset = 6; // toward top
 
