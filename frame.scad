@@ -332,12 +332,28 @@ translate([0,0,screen_base_level]){
                 cube([h_anchor_width,anchor_thickness,screen_base_stack_zheight+screen_holder_stack_zheight+screen_cover_stack_zheight]);
             };
 
-            // audio jack wall
+            // audio jack wall - left
+            translate([0,thickness+gap]){
+                cube([(outer_width-hollow_width)/2, keypad_offset-keypad_gap-thickness-gap, screen_base_zheight+audio_jack_outer_edge]);
+            };
+            // audio jack wall - right
             translate([outer_width-(outer_width-hollow_width)/2,thickness+gap]){
                 cube([(outer_width-hollow_width)/2, keypad_offset-keypad_gap-thickness-gap, screen_base_zheight+audio_jack_outer_edge]);
             };
         };
-        // audio jack space
+        // audio jack space - left
+        translate([0,keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight+audio_jack_outer_edge]){
+            translate([((outer_width-hollow_width)/2-audio_jack_thickness)/2,-audio_jack_outer_edge,-audio_jack_outer_edge]){
+                cube([audio_jack_thickness, audio_jack_outer_edge, audio_jack_outer_edge]);
+            };
+        };
+        translate([0,keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight+audio_jack_outer_edge]){
+            translate([0,-audio_jack_inner_edge-(audio_jack_outer_edge-audio_jack_inner_edge)/2,-audio_jack_inner_edge-(audio_jack_outer_edge-audio_jack_inner_edge)/2]){
+                cube([(outer_width-hollow_width)/2, audio_jack_inner_edge, audio_jack_inner_edge+(audio_jack_outer_edge-audio_jack_inner_edge)/2]);
+            };
+        };
+
+        // audio jack space - right
         translate([outer_width-(outer_width-hollow_width)/2,keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight+audio_jack_outer_edge]){
             translate([((outer_width-hollow_width)/2-audio_jack_thickness)/2,-audio_jack_outer_edge,-audio_jack_outer_edge]){
                 cube([audio_jack_thickness, audio_jack_outer_edge, audio_jack_outer_edge]);
