@@ -43,7 +43,10 @@ buckle_height=4;
 
 screen_support_zheight = screen_elevation+screen_gap_z;
 top_support_width = 100 - 34; // make room for mic pad
+top_left_support_width = 15;
 bottom_support_width = screen_width-thickness*2;
+screen_rest_left_margin = 15;
+screen_rest_depth = 7;
 
 micpad_connector_width = 6.3;
 micpad_connector_height = 3.2;
@@ -253,6 +256,11 @@ translate([0,0,screen_base_level]){
                     cube([top_support_width, screen_support_thickness, screen_support_zheight]);
                 };
 
+                // left top screen support
+                translate([screen_rest_left_margin-top_left_support_width/2,outer_height-thickness-screen_support_thickness-gap,0]){
+                    cube([top_left_support_width, screen_support_thickness, screen_support_zheight]);
+                };
+
                 // bottom screen support
                 translate([(outer_width-bottom_support_width)/2,thickness+gap,0]){
                     cube([bottom_support_width , screen_support_thickness, screen_support_zheight]);
@@ -342,6 +350,11 @@ translate([0,0,screen_base_level]){
                 cube([(outer_width-hollow_width)/2, keypad_offset-keypad_gap-thickness-gap, screen_base_zheight+audio_jack_outer_edge]);
             };
         };
+        // screen rest slot
+        translate([screen_rest_left_margin-(screen_glass_thickness+screen_gap_z*2)/2, 0, screen_base_zheight+screen_support_zheight-screen_rest_depth]){
+            cube([screen_glass_thickness+screen_gap_z*2, outer_height, screen_rest_depth]);
+        };
+
         // audio jack space - left
         translate([0,keypad_offset-keypad_stop_thickness-keypad_gap,screen_base_zheight+audio_jack_outer_edge]){
             translate([((outer_width-hollow_width)/2-audio_jack_thickness)/2,-audio_jack_outer_edge,-audio_jack_outer_edge]){
