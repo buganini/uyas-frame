@@ -539,9 +539,13 @@ translate([(outer_width-stand_width-stand_slot_gap*2)/2+stand_slot_gap,back_fram
 
             // led pad connector
             yield_multiplier = 6;
-            connector_space = ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier;
-            translate([(stand_width-ledpad_connector_height-ledpad_connector_gap*yield_multiplier)/2,0,-connector_space]){
-                cube([ledpad_connector_height+ledpad_connector_gap*yield_multiplier, stand_thickness, connector_space]);
+            connector_space_length = ledpad_connector_top_margin+ledpad_connector_width+ledpad_connector_gap*yield_multiplier;
+            connector_space_width = ledpad_connector_height+ledpad_connector_gap*yield_multiplier;
+            translate([(stand_width-connector_space_width)/2,0,-connector_space_length]){
+                cube([connector_space_width, stand_thickness, connector_space_length]);
+            };
+            translate([stand_width/2,stand_thickness*2,-connector_space_length]){
+                rotate([90,0,0]) cylinder(h=stand_thickness*3, r1=connector_space_width/2, r2=connector_space_width/2,$fn=fn);
             };
 
             img_width = 74;
