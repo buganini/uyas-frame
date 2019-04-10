@@ -99,6 +99,7 @@ ledpad_thickness = 0.8;
 ledpad_gap_xy = 0.25;
 ledpad_gap_z = 0.5;
 ledpad_support_thickness = 2;
+ledpad_front_guard_zheight = 1.5;
 ledpad_connector_width = 7.6;
 ledpad_connector_height = 3.4;
 ledpad_connector_zheight = 4.4;
@@ -484,8 +485,8 @@ translate([0,back_frame_inset,back_frame_level]){
                 cube([ledpad_width+ledpad_gap_xy*2,ledpad_thickness+ledpad_gap_z*2, ledpad_height+ledpad_gap_xy*2]);
             };
             // light room
-            translate([(outer_width-ledpad_width+ledpad_support_thickness*2)/2,0,pcb_zheight-ledpad_height-ledpad_gap_xy*2]){
-                cube([ledpad_width-ledpad_support_thickness*2,ledpad_support_thickness, ledpad_height+ledpad_gap_xy*2]);
+            translate([(outer_width-ledpad_width+ledpad_support_thickness*2)/2,0,pcb_zheight-ledpad_height-ledpad_gap_xy*2+ledpad_front_guard_zheight]){
+                cube([ledpad_width-ledpad_support_thickness*2,ledpad_support_thickness, ledpad_height+ledpad_gap_xy*2-ledpad_front_guard_zheight]);
             };
             // connector room
             translate([(outer_width-ledpad_connector_height-ledpad_connector_gap*2)/2,ledpad_support_thickness+ledpad_thickness+ledpad_gap_z*2,pcb_zheight-ledpad_connector_top_margin-ledpad_connector_width-ledpad_connector_gap*2]){
