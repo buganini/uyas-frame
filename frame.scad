@@ -41,6 +41,7 @@ screen_glass_thickness = 1.5 + 0.25;
 screen_buckle_width = 35;
 screen_buckle_height = 3;
 buckle_height=4;
+buckle_offset_z = 6;
 
 screen_support_zheight = screen_elevation+screen_gap_z;
 top_support_width = 100 - 34; // make room for mic pad
@@ -557,27 +558,27 @@ translate([0,back_frame_inset,back_frame_level]){
     };
 
     // left buckle
-    translate([-buckle_height,(outer_height-back_frame_inset*2-thickness*4)/2,-dc_jack_zheight]){
-        cube([buckle_height,thickness*4,back_frame_stack_zheight]);
+    translate([-buckle_height,(outer_height-back_frame_inset*2-thickness*4)/2,-dc_jack_zheight+buckle_offset_z]){
+        cube([buckle_height,thickness*4,back_frame_stack_zheight-buckle_offset_z]);
     };
-    translate([-buckle_height-thickness, (outer_height-back_frame_inset*2-thickness*6)/2, -dc_jack_zheight]){
-        rcube(thickness,thickness*6,back_frame_stack_zheight,thickness/2);
+    translate([-buckle_height-thickness, (outer_height-back_frame_inset*2-thickness*6)/2, -dc_jack_zheight+buckle_offset_z]){
+        rcube(thickness,thickness*6,back_frame_stack_zheight-buckle_offset_z,thickness/2);
     }
     // anchor
-    translate([-anchor_thickness-anchor_gap,(outer_height-back_frame_inset*2-v_anchor_width)/2,-dc_jack_zheight]){
-        cube([anchor_thickness,v_anchor_width,back_frame_stack_zheight+screen_base_zheight]);
+    translate([-anchor_thickness-anchor_gap,(outer_height-back_frame_inset*2-v_anchor_width)/2,-dc_jack_zheight+buckle_offset_z]){
+        cube([anchor_thickness,v_anchor_width,back_frame_stack_zheight+screen_base_zheight-buckle_offset_z]);
     };
 
     // right buckle
-    translate([outer_width,(outer_height-back_frame_inset*2-thickness*4)/2,-dc_jack_zheight]){
-        cube([buckle_height,thickness*4,back_frame_stack_zheight]);
+    translate([outer_width,(outer_height-back_frame_inset*2-thickness*4)/2,-dc_jack_zheight+buckle_offset_z]){
+        cube([buckle_height,thickness*4,back_frame_stack_zheight-buckle_offset_z]);
     };
-    translate([outer_width+buckle_height, (outer_height-back_frame_inset*2-thickness*6)/2, -dc_jack_zheight]){
-        rcube(thickness,thickness*6,back_frame_stack_zheight,thickness/2);
+    translate([outer_width+buckle_height, (outer_height-back_frame_inset*2-thickness*6)/2, -dc_jack_zheight+buckle_offset_z]){
+        rcube(thickness,thickness*6,back_frame_stack_zheight-buckle_offset_z,thickness/2);
     }
     // anchor
-    translate([outer_width+anchor_gap,(outer_height-back_frame_inset*2-v_anchor_width)/2,-dc_jack_zheight]){
-        cube([anchor_thickness,v_anchor_width,back_frame_stack_zheight+screen_base_zheight]);
+    translate([outer_width+anchor_gap,(outer_height-back_frame_inset*2-v_anchor_width)/2,-dc_jack_zheight+buckle_offset_z]){
+        cube([anchor_thickness,v_anchor_width,back_frame_stack_zheight+screen_base_zheight-buckle_offset_z]);
     };
 };
 
