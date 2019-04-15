@@ -262,6 +262,9 @@ translate([0,0,screen_base_level]){
                 translate([screen_rest_left_margin-top_left_support_width/2,outer_height-thickness-screen_support_thickness-gap,0]){
                     cube([top_left_support_width, screen_support_thickness, screen_support_zheight]);
                 };
+                translate([screen_rest_left_margin-top_left_support_width/2,outer_height-(outer_height-pcb_height-pcb_gap_xy*2)/2,0]){
+                    cube([top_left_support_width, screen_support_thickness, screen_support_zheight-screen_rest_depth]);
+                };
 
                 // bottom screen support
                 translate([(outer_width-bottom_support_width)/2,thickness+gap,0]){
