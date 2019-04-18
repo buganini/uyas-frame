@@ -72,7 +72,7 @@ top_pcb_stopper_length = 6;
 bottom_pcb_stopper_length = 12;
 pcb_stopper_width = pcb_support_r*1.5;
 
-audio_jack_thickness = 1.3 + 0.2;
+audio_jack_thickness = 1.35 + 0.7;
 audio_jack_inner_edge = 9.5 + 1.5;
 audio_jack_outer_edge = 18.9 + 0.6;
 
