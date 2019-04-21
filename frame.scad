@@ -489,10 +489,26 @@ translate([0,back_frame_inset,back_frame_level]){
         translate([(left_wall_thickness-(stand_thickness+stand_room_gap*2))/2,back_frame_height-stand_room_depth, pcb_zheight-stand_width-stand_room_gap]){
             cube([stand_thickness+stand_room_gap*2, stand_room_depth, stand_width+stand_room_gap]);
         };
+        hull(){
+            translate([(left_wall_thickness-(stand_thickness+stand_room_gap*2))/2,back_frame_height-stand_room_depth+stand_room_depth/4, pcb_zheight-stand_width-stand_room_gap]){
+                cube([stand_thickness+stand_room_gap*2, stand_room_depth*3/4, stand_width+stand_room_gap]);
+            };
+            translate([(left_wall_thickness-(stand_thickness+stand_room_gap*2))/2-0.5,back_frame_height-stand_room_depth+stand_room_depth*3/4, pcb_zheight-stand_width-stand_room_gap]){
+                cube([stand_thickness+stand_room_gap*2+1, stand_room_depth*4, stand_width+stand_room_gap]);
+            };
+        };
 
         // stand room - right
         translate([outer_width-stand_room_depth,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
             cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
+        };
+        hull(){
+            translate([outer_width-stand_room_depth+stand_room_depth/4,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
+                cube([stand_room_depth*3/4, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
+            };
+            translate([outer_width-stand_room_depth+stand_room_depth*3/4,stand_slot_offset-0.5, pcb_zheight-stand_width-stand_room_gap]){
+                cube([stand_room_depth/4, stand_thickness+stand_room_gap*2+1, stand_width+stand_room_gap]);
+            };
         };
 
 
