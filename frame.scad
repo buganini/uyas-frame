@@ -508,6 +508,11 @@ translate([0,back_frame_inset,back_frame_level]){
             };
         };
 
+        // stand room - upper
+        translate([(outer_width-(stand_length+4))/2,back_frame_height-stand_slot_offset-stand_thickness-stand_slot_gap*2, pcb_zheight-stand_width-stand_room_gap]){
+            cube([stand_length+4, stand_thickness*2+stand_room_gap*6, stand_width+stand_room_gap]);
+        };
+
         // stand room - right
         translate([outer_width-stand_room_depth,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
             cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
@@ -520,7 +525,6 @@ translate([0,back_frame_inset,back_frame_level]){
                 cube([stand_room_depth*stand_room_divider, stand_thickness+stand_room_wide_gap*2, stand_width+stand_room_gap]);
             };
         };
-
 
         // ledpad
         union(){
