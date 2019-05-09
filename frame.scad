@@ -577,15 +577,24 @@ translate([0,back_frame_inset,back_frame_level]){
                 cylinder(h=pcb_support_skirt_zheight, r1=pcb_support_r*1.5, r2=pcb_support_r*1.5,$fn=fn);
             };
         };
+        skirt_padding = (pcb_width+pcb_gap_xy*2-dc_jack_width)/2-h_offset-pcb_support_r*2;
         for(pos = [
             [left_offset, top_offset],
             [left_offset, bottom_offset],
+        ]){
+            translate(pos){
+                translate([-pcb_support_r*2-skirt_padding,-pcb_support_r]){
+                    cube([pcb_support_r*4+skirt_padding,pcb_support_r*2,pcb_support_skirt_zheight]);
+                };
+            };
+        };
+        for(pos = [
             [right_offset, top_offset],
             [right_offset, bottom_offset],
         ]){
             translate(pos){
                 translate([-pcb_support_r*2,-pcb_support_r]){
-                    cube([pcb_support_r*4,pcb_support_r*2,pcb_support_skirt_zheight]);
+                    cube([pcb_support_r*4+skirt_padding,pcb_support_r*2,pcb_support_skirt_zheight]);
                 };
             };
         };
