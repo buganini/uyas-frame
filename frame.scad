@@ -486,10 +486,10 @@ translate([0,back_frame_inset,back_frame_level]){
                 };
             };
             translate([louver_margin, 0, louver_thickness]){
-                cube([louver_width, thickness*louver_num*2, dc_jack_zheight-smt_zheight-louver_thickness]);
+                cube([louver_width, thickness*(louver_num*2-1), dc_jack_zheight-smt_zheight-louver_thickness]);
             };
             translate([outer_width-louver_margin-louver_width, 0, louver_thickness]){
-                cube([louver_width, thickness*louver_num*2, dc_jack_zheight-smt_zheight-louver_thickness]);
+                cube([louver_width, thickness*(louver_num*2-1), dc_jack_zheight-smt_zheight-louver_thickness]);
             };
         };
 
