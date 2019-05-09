@@ -57,6 +57,7 @@ micpad_connector_gap = 0.5;
 pcb_width = 163.4792;
 pcb_height = 97.05;
 pcb_zheight = 1.7 + 0.25;
+h_offset = 69;
 back_frame_inset = 2;
 dc_jack_width = 9 + 0.5;
 dc_jack_height = 11 + 0.5;
@@ -404,7 +405,10 @@ translate([0,0,screen_base_level]){
     };
 
     // top pcb stopper
-    translate([(outer_width-pcb_stopper_width)/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length-pcb_gap_xy,0]){
+    translate([outer_width/2-h_offset-dc_jack_width/2-pcb_stopper_width/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length-pcb_gap_xy,0]){
+        cube([pcb_stopper_width,top_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
+    };
+    translate([outer_width/2+h_offset+dc_jack_width/2-pcb_stopper_width/2,(outer_height-hollow_height)/2+hollow_height-top_pcb_stopper_length-pcb_gap_xy,0]){
         cube([pcb_stopper_width,top_pcb_stopper_length+pcb_gap_xy,screen_base_zheight]);
     };
 
@@ -549,7 +553,6 @@ translate([0,back_frame_inset,back_frame_level]){
         pin_height = dc_jack_zheight+pcb_zheight;
         pcb_support_skirt_zheight = support_height*0.7;
 
-        h_offset = 69;
         top_offset = dc_jack_height/2 + 31.5;
         bottom_offset = -dc_jack_height/2 - 29;
         left_offset = -dc_jack_width/2 - h_offset;
