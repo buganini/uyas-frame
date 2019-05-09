@@ -552,8 +552,8 @@ translate([0,back_frame_inset,back_frame_level]){
         h_offset = 69;
         top_offset = dc_jack_height/2 + 31.5;
         bottom_offset = -dc_jack_height/2 - 29;
-        left_offet = -dc_jack_width/2 - h_offset;
-        right_offet = dc_jack_width/2 + h_offset;
+        left_offset = -dc_jack_width/2 - h_offset;
+        right_offset = dc_jack_width/2 + h_offset;
 
         for(pos = [
             [0, top_offset],
@@ -564,10 +564,10 @@ translate([0,back_frame_inset,back_frame_level]){
             };
         };
         for(pos = [
-            [left_offet, top_offset],
-            [left_offet, bottom_offset],
-            [right_offet, top_offset],
-            [right_offet, bottom_offset],
+            [left_offset, top_offset],
+            [left_offset, bottom_offset],
+            [right_offset, top_offset],
+            [right_offset, bottom_offset],
         ]){
             translate(pos){
                 translate([-pcb_support_r*2,-pcb_support_r]){
@@ -578,10 +578,10 @@ translate([0,back_frame_inset,back_frame_level]){
         for(pos = [
             [0, top_offset],
             [0, bottom_offset],
-            [left_offet, top_offset],
-            [left_offet, bottom_offset],
-            [right_offet, top_offset],
-            [right_offet, bottom_offset],
+            [left_offset, top_offset],
+            [left_offset, bottom_offset],
+            [right_offset, top_offset],
+            [right_offset, bottom_offset],
         ]){
             translate(pos){
                 cylinder(h=support_height, r1=pcb_support_r, r2=pcb_support_r,$fn=fn);
