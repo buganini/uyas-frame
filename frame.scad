@@ -475,6 +475,7 @@ translate([0,back_frame_inset,back_frame_level]){
         louver_num = floor(pcb_height / (thickness*2));
         louver_width = pcb_width/2-thickness*5;
         louver_margin = thickness*5;
+        louver_thickness = 1.5;
         translate([0, (screen_height-thickness*louver_num*2)/2+thickness, -dc_jack_zheight]){
             for(i=[0:louver_num-1]){
                 translate([louver_margin, thickness*i*2, 0]){
@@ -483,6 +484,12 @@ translate([0,back_frame_inset,back_frame_level]){
                 translate([outer_width-louver_margin-louver_width, thickness*i*2, 0]){
                     cube([louver_width, thickness, dc_jack_zheight-smt_zheight]);
                 };
+            };
+            translate([louver_margin, 0, louver_thickness]){
+                cube([louver_width, thickness*louver_num*2, dc_jack_zheight-smt_zheight-louver_thickness]);
+            };
+            translate([outer_width-louver_margin-louver_width, 0, louver_thickness]){
+                cube([louver_width, thickness*louver_num*2, dc_jack_zheight-smt_zheight-louver_thickness]);
             };
         };
 
