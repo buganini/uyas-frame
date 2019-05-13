@@ -473,7 +473,7 @@ translate([0,back_frame_inset,back_frame_level]){
 
         // louver
         louver_num = floor(pcb_height / (thickness*2));
-        louver_width = pcb_width/2-thickness*5;
+        louver_width = pcb_width/2-thickness*4;
         louver_margin = thickness*5;
         louver_thickness = 1.5;
         translate([0, (screen_height-thickness*louver_num*2)/2+thickness, -dc_jack_zheight]){
