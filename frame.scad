@@ -116,6 +116,13 @@ ledpad_connector_zheight = 4.4;
 ledpad_connector_top_margin = 1.5;
 ledpad_connector_gap = 0.5;
 
+earphone_pad_width = 21;
+earphone_pad_hollow_width = 16;
+earphone_pad_thickness = 2;
+earphone_pad_guard = 1.5;
+earphone_pad_tht_room = 3;
+earphone_pad_hollow_depth = earphone_pad_thickness+earphone_pad_guard+earphone_pad_tht_room;
+
 back_frame_level = explosion_z*0;
 screen_base_level = pcb_zheight + explosion_z*1;
 screen_holder_level = screen_base_level + screen_base_stack_zheight + explosion_z;
@@ -360,6 +367,17 @@ translate([0,0,screen_base_level]){
                 cube([(outer_width-hollow_width)/2, keypad_offset-keypad_gap_xy-thickness-gap, screen_base_zheight+audio_jack_outer_edge]);
             };
         };
+
+        // earphone pad
+        union(){
+            translate([(outer_width-earphone_pad_width)/2,thickness+gap+screen_support_thickness-earphone_pad_thickness-earphone_pad_guard,screen_base_zheight]){
+                cube([earphone_pad_width,earphone_pad_thickness,screen_support_zheight]);
+            };
+            translate([(outer_width-earphone_pad_hollow_width)/2,thickness+gap+screen_support_thickness-earphone_pad_hollow_depth,screen_base_zheight]){
+                cube([earphone_pad_hollow_width,earphone_pad_hollow_depth,screen_support_zheight]);
+            };
+        }
+
         // screen rest slot
         translate([screen_rest_left_margin-(screen_glass_thickness+screen_gap_z*2)/2, 0, screen_base_zheight+screen_support_zheight-screen_rest_depth]){
             cube([screen_glass_thickness+screen_gap_z*2, outer_height, screen_rest_depth]);
