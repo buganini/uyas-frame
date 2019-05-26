@@ -144,7 +144,7 @@ module rcube(x,y,z,r){
 
 module screen_cover()
 translate([0,0,screen_cover_level]){
-    rotate([180*flip,0,0]){
+    rotate([180*flip,0,90*flip]){
         // cover
         translate([0,0,screen_glass_thickness+screen_module_zheight+screen_gap_z*2]){
             difference(){
@@ -245,6 +245,7 @@ translate([0,0,screen_holder_level]){
 };
 
 module screen_base()
+rotate([0,0,90*flip])
 translate([0,0,screen_base_level]){
     hollow_width = pcb_width+pcb_gap_xy*2;
     hollow_height = pcb_height+pcb_gap_xy*2;
@@ -471,6 +472,7 @@ translate([0,0,screen_base_level]){
 };
 
 module back_frame()
+rotate([0,0,90*flip])
 translate([0,back_frame_inset,back_frame_level]){
     back_frame_height = outer_height-back_frame_inset*2;
     difference(){
