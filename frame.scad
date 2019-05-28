@@ -12,6 +12,14 @@ keypad_gap_z = 0.5;
 micpad_gap_xy = 0.25;
 micpad_gap_z = 0.5;
 
+k_stand_room_top_left = 1.01;
+k_stand_room_top_right = 1.015;
+k_stand_room_bottom_left = 1.015;
+k_stand_room_bottom_right = 1.015;
+k_stand_slot_top_left = 1.00;
+k_stand_slot_top_right = 1.015;
+k_stand_slot_bottom = 1.02;
+
 thickness = 3;
 r = thickness;
 
@@ -472,7 +480,7 @@ translate([0,0,screen_base_level]){
 };
 
 module back_frame()
-rotate([0,0,90*flip])
+rotate([0,0,-90*flip])
 translate([0,back_frame_inset,back_frame_level]){
     back_frame_height = outer_height-back_frame_inset*2;
     difference(){
@@ -513,64 +521,89 @@ translate([0,back_frame_inset,back_frame_level]){
             };
         };
 
-        // stand slot
-        for(pos = [
-            [(outer_width-stand_width-stand_slot_gap*2)/2,stand_slot_offset, -dc_jack_zheight],
-            [(outer_width-pcb_width-+pcb_gap_xy*2)/2,back_frame_height-stand_slot_offset-stand_thickness-stand_slot_gap*2, -dc_jack_zheight],
-            [outer_width-((outer_width-pcb_width-+pcb_gap_xy*2)/2)-(stand_width+stand_slot_gap*2),back_frame_height-stand_slot_offset-stand_thickness-stand_slot_gap*2, -dc_jack_zheight]
-        ]){
-            translate(pos){
-                hull(){
-                    translate([0,0,0])cube([stand_width+stand_slot_gap*2, stand_thickness+stand_slot_gap*2, e]);
-                    translate([0,stand_slot_gap-stand_slot_narrow_gap,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, stand_thickness+stand_slot_narrow_gap*2, e]);
-                };
-                translate([0,stand_slot_gap-stand_slot_narrow_gap,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, stand_thickness+stand_slot_narrow_gap*2, back_frame_stack_zheight*(1-stand_slot_divider)]);
+        // stand slot - top left
+        translate([(outer_width-pcb_width-+pcb_gap_xy*2)/2,back_frame_height-stand_slot_offset-(stand_thickness+stand_slot_gap*2)*k_stand_slot_top_left, -dc_jack_zheight]){
+            hull(){
+                translate([0,0,0])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_gap*2)*k_stand_slot_top_left, e]);
+                translate([0,(stand_slot_gap-stand_slot_narrow_gap)*k_stand_slot_top_left,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_narrow_gap*2)*k_stand_slot_top_left, e]);
             };
-        }
+            translate([0,(stand_slot_gap-stand_slot_narrow_gap)*k_stand_slot_top_left,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_narrow_gap*2)*k_stand_slot_top_left, back_frame_stack_zheight*(1-stand_slot_divider)]);
+        };
+
+        // stand slot - top right
+        translate([outer_width-((outer_width-pcb_width-+pcb_gap_xy*2)/2)-(stand_width+stand_slot_gap*2),back_frame_height-stand_slot_offset-(stand_thickness+stand_slot_gap*2)*k_stand_slot_top_right, -dc_jack_zheight]){
+            hull(){
+                translate([0,0,0])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_gap*2)*k_stand_slot_top_right, e]);
+                translate([0,(stand_slot_gap-stand_slot_narrow_gap)*k_stand_slot_top_right,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_narrow_gap*2)*k_stand_slot_top_right, e]);
+            };
+            translate([0,(stand_slot_gap-stand_slot_narrow_gap)*k_stand_slot_top_right,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_narrow_gap*2)*k_stand_slot_top_right, back_frame_stack_zheight*(1-stand_slot_divider)]);
+        };
+
+        // stand slot - bottom
+        translate([(outer_width-stand_width-stand_slot_gap*2)/2,stand_slot_offset, -dc_jack_zheight]){
+            hull(){
+                translate([0,0,0])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_gap*2)*k_stand_slot_bottom, e]);
+                translate([0,(stand_slot_gap-stand_slot_narrow_gap)*k_stand_slot_bottom,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_narrow_gap*2)*k_stand_slot_bottom, e]);
+            };
+            translate([0,(stand_slot_gap-stand_slot_narrow_gap)*k_stand_slot_bottom,back_frame_stack_zheight*stand_slot_divider])cube([stand_width+stand_slot_gap*2, (stand_thickness+stand_slot_narrow_gap*2)*k_stand_slot_bottom, back_frame_stack_zheight*(1-stand_slot_divider)]);
+        };
 
         stand_room_depth = stand_length-thickness*1.5;
-        // stand room - top
         left_wall_thickness = (outer_width-pcb_width-+pcb_gap_xy*2)/2;
-        for(x=[
-            (left_wall_thickness-(stand_thickness+stand_room_gap*2))/2,
-            outer_width-left_wall_thickness+(left_wall_thickness-(stand_thickness+stand_room_gap*2))/2
-        ]){
-            translate([x,back_frame_height-stand_room_depth, pcb_zheight-stand_width-stand_room_gap]){
-                cube([stand_thickness+stand_room_gap*2, stand_room_depth, stand_width+stand_room_gap]);
+        // stand room - top left
+        union(){
+            x = (left_wall_thickness-(stand_thickness+stand_room_gap*2)*k_stand_room_top_left)/2;
+            translate([x,back_frame_height-stand_room_depth, pcb_zheight-(stand_width+stand_room_gap)]){
+                cube([(stand_thickness+stand_room_gap*2)*k_stand_room_top_left, stand_room_depth, stand_width+stand_room_gap]);
             };
             hull(){
                 translate([x,back_frame_height-stand_room_depth+stand_room_depth*stand_room_divider, pcb_zheight-stand_width-stand_room_gap]){
-                    cube([stand_thickness+stand_room_gap*2, e, stand_width+stand_room_gap]);
+                    cube([(stand_thickness+stand_room_gap*2)*k_stand_room_top_left, e, stand_width+stand_room_gap]);
                 };
-                translate([x-(stand_room_wide_gap-stand_room_gap),back_frame_height, pcb_zheight-stand_width-stand_room_gap]){
-                    cube([stand_thickness+stand_room_wide_gap*2, e, stand_width+stand_room_gap]);
+                translate([x-(stand_room_wide_gap-stand_room_gap)*k_stand_room_top_left,back_frame_height, pcb_zheight-stand_width-stand_room_gap]){
+                    cube([(stand_thickness+stand_room_wide_gap*2)*k_stand_room_top_left, e, stand_width+stand_room_gap]);
                 };
             };
-        }
+        };
+        // stand room - top right
+        union(){
+            x = outer_width-left_wall_thickness+(left_wall_thickness-(stand_thickness+stand_room_gap*2)*k_stand_room_top_right)/2;
+            translate([x,back_frame_height-stand_room_depth, pcb_zheight-stand_width-stand_room_gap]){
+                cube([(stand_thickness+stand_room_gap*2)*k_stand_room_top_right, stand_room_depth, stand_width+stand_room_gap]);
+            };
+            hull(){
+                translate([x,back_frame_height-stand_room_depth+stand_room_depth*stand_room_divider, pcb_zheight-stand_width-stand_room_gap]){
+                    cube([(stand_thickness+stand_room_gap*2)*k_stand_room_top_right, e, stand_width+stand_room_gap]);
+                };
+                translate([x-(stand_room_wide_gap-stand_room_gap)*k_stand_room_top_right,back_frame_height, pcb_zheight-stand_width-stand_room_gap]){
+                    cube([(stand_thickness+stand_room_wide_gap*2)*k_stand_room_top_right, e, stand_width+stand_room_gap]);
+                };
+            };
+        };
 
-        // stand room - left
+        // stand room - bottom left
         translate([0,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
-            cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
+            cube([stand_room_depth, (stand_thickness+stand_room_gap*2)*k_stand_room_bottom_left, stand_width+stand_room_gap]);
         };
         hull(){
             translate([stand_room_depth*(1-stand_room_divider),stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
-                cube([e, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
+                cube([e, (stand_thickness+stand_room_gap*2)*k_stand_room_bottom_left, stand_width+stand_room_gap]);
             };
-            translate([0,stand_slot_offset-(stand_room_wide_gap-stand_room_gap), pcb_zheight-stand_width-stand_room_gap]){
-                cube([e, stand_thickness+stand_room_wide_gap*2, stand_width+stand_room_gap]);
+            translate([0,stand_slot_offset-(stand_room_wide_gap-stand_room_gap)*k_stand_room_bottom_left, pcb_zheight-stand_width-stand_room_gap]){
+                cube([e, (stand_thickness+stand_room_wide_gap*2)*k_stand_room_bottom_left, stand_width+stand_room_gap]);
             };
         };
 
-        // stand room - right
+        // stand room - bottom right
         translate([outer_width-stand_room_depth,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
-            cube([stand_room_depth, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
+            cube([stand_room_depth, (stand_thickness+stand_room_gap*2)*k_stand_room_bottom_right, stand_width+stand_room_gap]);
         };
         hull(){
             translate([outer_width-stand_room_depth+stand_room_depth*stand_room_divider,stand_slot_offset, pcb_zheight-stand_width-stand_room_gap]){
-                cube([e, stand_thickness+stand_room_gap*2, stand_width+stand_room_gap]);
+                cube([e, (stand_thickness+stand_room_gap*2)*k_stand_room_bottom_right, stand_width+stand_room_gap]);
             };
-            translate([outer_width,stand_slot_offset-(stand_room_wide_gap-stand_room_gap), pcb_zheight-stand_width-stand_room_gap]){
-                cube([e, stand_thickness+stand_room_wide_gap*2, stand_width+stand_room_gap]);
+            translate([outer_width,stand_slot_offset-(stand_room_wide_gap-stand_room_gap)*k_stand_room_bottom_right, pcb_zheight-stand_width-stand_room_gap]){
+                cube([e, (stand_thickness+stand_room_wide_gap*2)*k_stand_room_bottom_right, stand_width+stand_room_gap]);
             };
         };
 
