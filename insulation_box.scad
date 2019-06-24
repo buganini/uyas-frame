@@ -1,5 +1,6 @@
 explode_z = 0;
 explode_xy = 0;
+open = 0.6;
 
 fn = 128;
 gap = 1.5;
@@ -16,14 +17,16 @@ support_zheight = cylinder_zheight + sponge_thickness + 20 - eva_thickness;
 support_length = 100;
 support_thickness = 40 + eva_thickness;
 support_w = support_length * cos(45);
-box_w = body_w + margin*2 + sponge_thickness*2 + board_thickness*2 + support_w;
-box_h = body_h + margin*2 + sponge_thickness*2 + board_thickness*2 + support_w;
-box_base_zheight = board_thickness+support_zheight + eva_thickness + body_zheight;
+box_w = body_w + margin*2 + sponge_thickness*2 + board_thickness*4 + support_w;
+box_h = body_h + margin*2 + sponge_thickness*2 + board_thickness*4 + support_w;
+box_base_zheight = board_thickness+support_zheight + eva_thickness + body_zheight + margin/2;
 body_offset_x = (box_w-body_w)/2;
 body_offset_y = (box_h-body_h)/2;
 
+box_cover_zheight = board_thickness + sponge_thickness + margin/2;
+
 module uyas()
-translate(){
+translate([body_offset_x,body_offset_y,board_thickness+explode_z]){
     trench = 4;
     pillar = 9.6/2;
     stand_length = 185.5;
@@ -65,7 +68,7 @@ translate(){
 }
 
 module box_base()
-translate(){
+translate([0,0,board_thickness]){
     translate([0,0,-board_thickness])
     cube([box_w, box_h, board_thickness]);
     
@@ -101,11 +104,33 @@ translate(){
         translate([eva_thickness-gap,eva_thickness-gap,eva_thickness-gap]) cube([hollow_size,hollow_size,hollow_size]);
     };
     
-    translate([0,-explode_xy,0]) cube([box_w, board_thickness, box_base_zheight-board_thickness]);
-    translate([-explode_xy,0,0]) cube([board_thickness, box_h, box_base_zheight-board_thickness]);
-    translate([0,box_h-board_thickness+explode_xy,0]) cube([box_w, board_thickness, box_base_zheight-board_thickness]);
-    translate([box_w-board_thickness+explode_xy,0,0]) cube([board_thickness, box_h, box_base_zheight-board_thickness]);
+    translate([0,-explode_xy*2,0]) cube([box_w, board_thickness, box_base_zheight-board_thickness]);
+    translate([-explode_xy*2,0,0]) cube([board_thickness, box_h, box_base_zheight-board_thickness]);
+    translate([0,box_h-board_thickness+explode_xy*2,0]) cube([box_w, board_thickness, box_base_zheight-board_thickness]);
+    translate([box_w-board_thickness+explode_xy*2,0,0]) cube([board_thickness, box_h, box_base_zheight-board_thickness]);
+
+    seal_zheight = box_base_zheight-board_thickness+margin/2+sponge_thickness/2;
+    translate([board_thickness,board_thickness-explode_xy,0]) cube([box_w-board_thickness*2, board_thickness, seal_zheight]);
+    translate([board_thickness-explode_xy,board_thickness,0]) cube([board_thickness, box_h-board_thickness*2, seal_zheight]);
+    translate([board_thickness,box_h-board_thickness*2+explode_xy,0]) cube([box_w-board_thickness*2, board_thickness, seal_zheight]);
+    translate([box_w-board_thickness*2+explode_xy,board_thickness,0]) cube([board_thickness, box_h-board_thickness*2, seal_zheight]);
 };
 
-translate([body_offset_x,body_offset_y,explode_z]) uyas();
+module box_cover()
+translate([0,box_h,box_base_zheight+explode_z*2]){
+    rotate([-180*open,0,0]){
+        translate([0,-box_h,0]){
+            translate([0,0,box_cover_zheight-board_thickness]) cube([box_w, box_h, board_thickness]);
+
+            translate([0,-explode_xy,0]) cube([box_w, board_thickness, box_cover_zheight-board_thickness]);
+            translate([-explode_xy,0,0]) cube([board_thickness, box_h, box_cover_zheight-board_thickness]);
+            translate([0,box_h-board_thickness+explode_xy,0]) cube([box_w, board_thickness, box_cover_zheight-board_thickness]);
+            translate([box_w-board_thickness+explode_xy,0,0]) cube([board_thickness, box_h, box_cover_zheight-board_thickness]);
+
+        };
+    };
+}
+
+box_cover();
+uyas();
 box_base();
