@@ -10,6 +10,7 @@ body_zheight = 38;
 cylinder_zheight = 24.6;
 sponge_thickness = 38;
 board_thickness = 20;
+inner_board_thickness = 10;
 margin = 30;
 eva_cube = 30;
 eva_thickness = 5;
@@ -119,17 +120,25 @@ translate([0,0,board_thickness]){
     translate([body_offset_x+body_w/4-speaker_pylon_width/2+speaker_size/2,box_h-body_offset_y-speaker_pylon_width/2+speaker_size/2,speaker_offset_z]) cylinder(h=speaker_thickness, r1=speaker_size/2, r2=speaker_size/2, $fn=fn);
 
     // wall
+    // bottom
     translate([0,-explode_xy*2,0]) cube([box_w, board_thickness, box_base_zheight-board_thickness]);
+    // left
     translate([-explode_xy*2,0,0]) cube([board_thickness, box_h, box_base_zheight-board_thickness]);
+    // top
     translate([0,box_h-board_thickness+explode_xy*2,0]) cube([box_w, board_thickness, box_base_zheight-board_thickness]);
+    // right
     translate([box_w-board_thickness+explode_xy*2,0,0]) cube([board_thickness, box_h, box_base_zheight-board_thickness]);
 
     // inner wall
     seal_zheight = box_base_zheight-board_thickness+margin/2+sponge_thickness/2;
-    translate([board_thickness,board_thickness-explode_xy,0]) cube([box_w-board_thickness*2, board_thickness, seal_zheight]);
-    translate([board_thickness-explode_xy,board_thickness,0]) cube([board_thickness, box_h-board_thickness*2, seal_zheight]);
-    translate([board_thickness,box_h-board_thickness*2+explode_xy,0]) cube([box_w-board_thickness*2, board_thickness, seal_zheight]);
-    translate([box_w-board_thickness*2+explode_xy,board_thickness,0]) cube([board_thickness, box_h-board_thickness*2, seal_zheight]);
+    // bottom
+    translate([board_thickness,board_thickness-explode_xy,0]) cube([box_w-board_thickness*2, inner_board_thickness, seal_zheight]);
+    // left
+    translate([board_thickness-explode_xy,board_thickness,0]) cube([inner_board_thickness, box_h-board_thickness*2, seal_zheight]);
+    // top
+    translate([board_thickness,box_h-board_thickness-inner_board_thickness+explode_xy,0]) cube([box_w-board_thickness*2, inner_board_thickness, seal_zheight]);
+    // right
+    translate([box_w-board_thickness-inner_board_thickness+explode_xy,board_thickness,0]) cube([inner_board_thickness, box_h-board_thickness*2, seal_zheight]);
 };
 
 module box_cover()
