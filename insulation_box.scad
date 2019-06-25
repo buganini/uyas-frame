@@ -32,7 +32,7 @@ speaker_spacing = 10;
 box_cover_zheight = board_thickness + sponge_thickness + margin/2;
 
 module uyas()
-translate([body_offset_x,body_offset_y,board_thickness+explode_z]){
+translate([body_offset_x,body_offset_y,board_thickness+explode_z*3]){
     trench = 4;
     pillar = 9.6/2;
     stand_length = 185.5;
