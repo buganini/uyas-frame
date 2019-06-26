@@ -9,8 +9,8 @@ body_h = 255.5;
 body_zheight = 38;
 cylinder_zheight = 24.6;
 sponge_thickness = 38;
-board_thickness = 20;
-inner_board_thickness = 10;
+board_thickness = 12;
+inner_board_thickness = 3.5;
 margin = 30;
 eva_cube = 30;
 eva_thickness = 5;
@@ -18,8 +18,10 @@ support_zheight = cylinder_zheight + sponge_thickness + 20 - eva_thickness;
 support_length = 60;
 support_thickness = 40 + eva_thickness;
 support_w = support_length * cos(45);
-box_w = body_w + margin*2 + sponge_thickness*2 + board_thickness*4 + support_w;
-box_h = body_h + margin*2 + sponge_thickness*2 + board_thickness*4 + support_w;
+box_w = body_w + margin*2 + sponge_thickness*2 + board_thickness*2 +
+ inner_board_thickness*2+ support_w;
+box_h = body_h + margin*2 + sponge_thickness*2 + board_thickness*2 +
+ inner_board_thickness*2 + support_w;
 box_base_zheight = board_thickness+support_zheight + eva_thickness + body_zheight + margin/2;
 body_offset_x = (box_w-body_w)/2;
 body_offset_y = (box_h-body_h)/2;
@@ -155,6 +157,11 @@ translate([0,box_h,box_base_zheight+explode_z*2]){
         };
     };
 }
+
+echo("box_w", box_w);
+echo("box_h", box_h);
+echo("box_base_zheight", box_base_zheight);
+echo("box_cover_zheight", box_cover_zheight);
 
 box_cover();
 uyas();
